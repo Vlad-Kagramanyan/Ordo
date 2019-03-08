@@ -1,0 +1,1 @@
+export default URL = 'http://myworks.site/dev/calendar_based_api/public/api/';
