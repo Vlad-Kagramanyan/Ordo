@@ -1,13 +1,18 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, StatusBar} from 'react-native';
-import InitialForms from './Containers/InitialForms';
-import WeeklyVisitation from './Components/WeeklyVisitation';
-import FreePaid from './Components/FreePaid';
+import Main from './Containers/Main';
+import { createStore, applyMiddleware } from 'redux';
+import { Provider, connect } from 'react-redux';
+import thunk from 'redux-thunk';
+import reducer from './store/reducers/users';
+
+const store = createStore(reducer, applyMiddleware(thunk));
 
 export default class App extends Component {
   render() {
       return (
-          <InitialForms/>
+        <Provider store={store}>
+          <Main/>
+        </Provider>
         );
   }
 }

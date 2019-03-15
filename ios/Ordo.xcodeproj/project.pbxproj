@@ -47,6 +47,7 @@
 		2897B6E861BD4BC393627386 /* LATO-REGULAR.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 9FCEB19CB334482A991520B2 /* LATO-REGULAR.TTF */; };
 		2AF933872CF742B1A30F65FB /* LATO-SEMIBOLD.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 3D8626DAA1A94FFEBF011C1F /* LATO-SEMIBOLD.TTF */; };
 		D902FF230F3945BD9E6FC1E3 /* LATO-THIN.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 1B062483EADC41878508CF32 /* LATO-THIN.TTF */; };
+		F3F9999C83CE41409D4955D1 /* libRNGoogleSignin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A638533B43114427A5FCC4ED /* libRNGoogleSignin.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -362,6 +363,8 @@
 		9FCEB19CB334482A991520B2 /* LATO-REGULAR.TTF */ = {isa = PBXFileReference; name = "LATO-REGULAR.TTF"; path = "../android/app/src/main/assets/fonts/LATO-REGULAR.TTF"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		3D8626DAA1A94FFEBF011C1F /* LATO-SEMIBOLD.TTF */ = {isa = PBXFileReference; name = "LATO-SEMIBOLD.TTF"; path = "../android/app/src/main/assets/fonts/LATO-SEMIBOLD.TTF"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		1B062483EADC41878508CF32 /* LATO-THIN.TTF */ = {isa = PBXFileReference; name = "LATO-THIN.TTF"; path = "../android/app/src/main/assets/fonts/LATO-THIN.TTF"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		1FB74B306162437D87CB72C3 /* RNGoogleSignin.xcodeproj */ = {isa = PBXFileReference; name = "RNGoogleSignin.xcodeproj"; path = "../node_modules/react-native-google-signin/ios/RNGoogleSignin.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		A638533B43114427A5FCC4ED /* libRNGoogleSignin.a */ = {isa = PBXFileReference; name = "libRNGoogleSignin.a"; path = "libRNGoogleSignin.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -390,6 +393,7 @@
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
+				F3F9999C83CE41409D4955D1 /* libRNGoogleSignin.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -579,6 +583,7 @@
 				832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */,
 				00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */,
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
+				1FB74B306162437D87CB72C3 /* RNGoogleSignin.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1229,6 +1234,14 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ordo.app/Ordo";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)\..\node_modules\react-native-google-signin\ios\RNGoogleSignin",
+				);
 			};
 			name = Debug;
 		};
@@ -1247,6 +1260,14 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ordo.app/Ordo";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)\..\node_modules\react-native-google-signin\ios\RNGoogleSignin",
+				);
 			};
 			name = Release;
 		};
@@ -1266,6 +1287,10 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = Ordo;
 				VERSIONING_SYSTEM = "apple-generic";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)\..\node_modules\react-native-google-signin\ios\RNGoogleSignin",
+				);
 			};
 			name = Debug;
 		};
@@ -1284,6 +1309,10 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = Ordo;
 				VERSIONING_SYSTEM = "apple-generic";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)\..\node_modules\react-native-google-signin\ios\RNGoogleSignin",
+				);
 			};
 			name = Release;
 		};
@@ -1310,6 +1339,14 @@
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.2;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)\..\node_modules\react-native-google-signin\ios\RNGoogleSignin",
+				);
 			};
 			name = Debug;
 		};
@@ -1336,6 +1373,14 @@
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.2;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)\..\node_modules\react-native-google-signin\ios\RNGoogleSignin",
+				);
 			};
 			name = Release;
 		};
@@ -1361,6 +1406,14 @@
 				SDKROOT = appletvos;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ordo-tvOS.app/Ordo-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)\..\node_modules\react-native-google-signin\ios\RNGoogleSignin",
+				);
 			};
 			name = Debug;
 		};
@@ -1386,6 +1439,14 @@
 				SDKROOT = appletvos;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ordo-tvOS.app/Ordo-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)\..\node_modules\react-native-google-signin\ios\RNGoogleSignin",
+				);
 			};
 			name = Release;
 		};

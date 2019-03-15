@@ -12,7 +12,6 @@ export default class WeeklyVisitation extends Component {
         value: 0,
         alternate: 0,
         sleepOver: 0,
-        data: ['child 1', 'child 2', 'child 3'],
         munRadioBtn: 0,
         tueRadioBtn: 0,
         wedRadioBtn: 0,
@@ -27,16 +26,26 @@ export default class WeeklyVisitation extends Component {
           {day: 'sut', valName: 'sutRadioBtn', show: false},
           {day: 'sun', valName: 'sunRadioBtn', show: false}
         ],
-        radio_props : [
-          {label: 'Child 1', value: 0 },
-          {label: 'Child 2', value: 1 },
-          {label: 'Child 3', value: 2 }
-        ]
+        radio_props : this.props.countValChilds
       }
     }
 
     slideTo = (type) => {
-      
+      let arr = Object.assign([], this.state.radio_props)
+      let first = ""
+      if(type == 'right') {
+        first = arr.shift()
+        arr.push(first)
+        this.setState({radio_props : arr})
+      }else if(type == 'left') {
+        let last = arr.pop();
+        arr.unshift(last)
+        this.setState({radio_props : arr})
+      }
+    }
+
+    childsLength = () => {
+      return Object.assign([], this.state.radio_props.slice(0, 3));
     }
 
     showModal = (index) => {
@@ -50,29 +59,37 @@ export default class WeeklyVisitation extends Component {
     }
 
     render() {
+      console.log('render week', this.state)
+      let parentCount = "";
+        for(let i = 1; i <= this.props.parentCount; i++) {
+          parentCount += `p${i}/ `; 
+        }
       
         return (
             <ScrollView contentContainerStyle={styles.contentContainerStyle} style={styles.container}>
                 <ImageBackground source={require('../images/bg.jpg')} style={[styles.imageBg, {height: '100%', position: 'absolute'}]}></ImageBackground>
                   <Text style={[styles.title, {marginTop: 50}]}>Weekly visitation Arrangements</Text>
                   <View style={[Styles.FlexRow, {width: '100%', padding: 15}]}>
-                    <TouchableOpacity style={{ marginTop: -10}} onPress={this.slideTo('left')}>
+                    <TouchableOpacity style={{ marginTop: -10}} onPress={()=>this.slideTo('left')}>
                         <Image source={require('../images/arrowleft.png')} style={{width: 12, height: 18}}/>
                     </TouchableOpacity>
                     <ChildRadioBtn 
                       valueName={'value'}
-                      radio_props={this.state.radio_props}
+                      radio_props={this.childsLength()}
                       value={this.state.value}
                       SelectRadioBtn={(valueName, value)=>this.SelectRadioBtn(valueName, value)}/>
-                    <TouchableOpacity style={{ marginTop: -10}} onPress={this.slideTo('right')}>
+                    <TouchableOpacity style={{ marginTop: -10}} onPress={()=>this.slideTo('right')}>
                         <Image source={require('../images/arrowright.png')} style={{width: 12, height: 18}}/>
                     </TouchableOpacity>
                   </View>
                 <View style={styles.wrapper}>
                     <View style={{width: '100%', flexDriection: 'row', justifyContent: 'flex-start'}}>
-                      <View style={[styles.row, {width: '60%'}]}>
+                      <View style={[styles.row, {width: '100%'}]}>
                         <Text style={styles.title}>Day</Text>
-                        <Text style={styles.title}>p1/p2</Text>
+                        <Text style={styles.title}>{parentCount}</Text>
+                        <View style={{width: 30, marginTop: -10}}>
+                              
+                        </View>
                       </View>
                     </View>
                     {
@@ -84,7 +101,7 @@ export default class WeeklyVisitation extends Component {
                           </View>
                           <ChildRadioBtn 
                             valueName={item.valName}
-                            radio_props={[{value: 0}, {value: 1}]}
+                            radio_props={this.props.countValParents}
                             value={this.state[item.valName]}
                             SelectRadioBtn={(valueName, value)=>this.SelectRadioBtn(valueName, value)}/>
                             <TouchableOpacity style={{width: 45, marginTop: -10}} onPress={() => this.showModal(index)}>
@@ -97,7 +114,7 @@ export default class WeeklyVisitation extends Component {
                               <Image source={require('../images/ChildtimearrowLeft.png')} style={{width: '100%', height: 30}}/>
                             </TouchableOpacity>
                             <View style={Styles.FlexColumn}>
-                              <Text style={Styles.ColorWhite}>alternate</Text>
+                              <Text style={styles.text}>alternate</Text>
                               <ChildRadioBtn 
                                 valueName={'alternate'}
                                 radio_props={[{value: 0}]}
@@ -105,17 +122,17 @@ export default class WeeklyVisitation extends Component {
                                 SelectRadioBtn={(valueName, value)=>this.SelectRadioBtn(valueName, value)}/>
                             </View>
                             <View style={{ width: '20%'}}>
-                              <Text style={Styles.ColorWhite}>Pickup</Text>
+                              <Text style={styles.text}>Pickup</Text>
                               <TextInput style={{backgroundColor: 'white', padding: 10, width: '100%'}} placeholder="00:00 pm">
                               </TextInput>
                             </View>
                             <View style={{ width: '20%'}}>
-                              <Text style={Styles.ColorWhite}>Return</Text>
+                              <Text style={styles.text}>Return</Text>
                               <TextInput style={{backgroundColor: 'white', padding: 10, width: '100%'}} placeholder="00:00 am">
                               </TextInput>
                             </View>
                             <View style={Styles.FlexColumn}>
-                              <Text style={Styles.ColorWhite}>sleep over</Text>
+                              <Text style={styles.text}>sleep over</Text>
                               <ChildRadioBtn 
                                 valueName={'sleepOver'}
                                 radio_props={[{value: 0}]}
@@ -157,7 +174,11 @@ const styles = StyleSheet.create({
     title: {
       color: '#89c194',
       fontSize: 20,
-      marginBottom: 25
+      marginBottom: 25,
+    },
+
+    text: {
+      color: '#89c194'
     },
 
     imageBg: {

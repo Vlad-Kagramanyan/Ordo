@@ -1,11 +1,55 @@
 import React, {Component} from 'react';
 import screen from '../constants/screen';
 import {TouchableOpacity, ScrollView, Image, ImageBackground, StyleSheet, Text, View} from 'react-native';
+import { GoogleSignin, statusCodes, GoogleSigninButton } from 'react-native-google-signin';
 import fonts from '../src/utils/fonts';
 import LoginForm from './LoginForm';
 
 export default class Signin extends Component {
+  state = {
+    userInfo: "",
+    error: ""
+  }
+
+  async componentDidMount () {
+    try {
+      await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+      // google services are available
+    } catch (err) {
+      console.error('play services are not available');
+      this.setState({ error: 'play services are not available' });
+    }
+
+    GoogleSignin.configure({
+      scopes: ['https://www.googleapis.com/auth/drive.readonly'], // what API you want to access on behalf of the user, default is email and profile
+      webClientId: "547808104761-orhk06j8l2jrljao2v1475v5ri5ajpff.apps.googleusercontent.com", // client ID of type WEB for your server (needed to verify user ID and offline access)
+    })
+  }
+
+  signIn = async () => {
+    try {
+      await GoogleSignin.hasPlayServices();
+      const userInfo = await GoogleSignin.signIn();
+      this.props.googleFetch(userInfo)
+      this.setState({ userInfo });
+    } catch (error) {
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        console.log('user cancelled the login flow')
+        this.setState({ error: 'user cancelled the login flow' });
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+         console.log('operation (f.e. sign in) is in progress already')
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        console.log('// play services not available or outdated')
+        this.setState({ error: 'play services not available or outdated' });
+      } else {
+        console.log('// some other error happened')
+        this.setState({ error: 'some other error happened' });
+      }
+    }
+  };
+
   render() {
+    console.log('state s', this.state)
     return (
       <ScrollView contentContainerStyle={styles.contentContainerStyle} style={styles.container}>
           <ImageBackground source={require('../images/bg.jpg')} style={[styles.imageBg, {width: '100%', height: '100%', position: 'absolute'}]}></ImageBackground>
@@ -14,13 +58,15 @@ export default class Signin extends Component {
                 <Image source={require('../images/ordo_logo.png')} style={styles.logo}/>
             </View>
             <LoginForm 
+              fetch={this.props.fetch}
               password={this.props.password}
               email={this.props.email}
               userLogin={this.props.userLogin}
               msg={this.props.msg}
               inputChange={(target, value) => this.props.inputChange(target, value)}/>
             <Text style={styles.text}>OR</Text>
-            <TouchableOpacity style={styles.googlebutton} onPress={this.props.change1}>
+            {this.state.error.length > 0 && <Text style={[styles.text, {color: 'red'}]}>{this.state.error}</Text>}
+            <TouchableOpacity style={styles.googlebutton} onPress={this.signIn}>
               <View>
                   <Image source={require('../images/search.png')}/>
               </View>

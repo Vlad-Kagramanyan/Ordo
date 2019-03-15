@@ -11,6 +11,14 @@ import country from '../constants/country';
 export default class ParentForm extends Component {
   constructor(props) {
     super(props)
+    this.state = {count: 1}
+  }
+
+  componentDidMount() {
+    if(this.props.parentCount != this.state.count) {
+      this.props.reset()
+      this.setState({count: this.props.parentCount})
+    }
   }
 
   render() {
@@ -19,7 +27,7 @@ export default class ParentForm extends Component {
       <ScrollView  contentContainerStyle={{alignItems: 'center'}} style={styles.continer}>
           <ImageBackground source={require('../images/bg.jpg')} style={styles.imageBg}></ImageBackground>
           <View style={styles.wrapper}>
-            <Text style={styles.title}>Parent 1</Text>
+            <Text style={styles.title}>Parent {this.props.parentCount}</Text>
             <TextInput style={styles.input} placeholder="First name" placeholderTextColor="#89c194" name="firstName" value={this.props.firstName} onChangeText={(text) => this.props.inputChange('firstName', text)}/>
             <TextInput style={styles.input} placeholder="Last name" placeholderTextColor="#89c194" name="lastName" value={this.props.lastName} onChangeText={(text) => this.props.inputChange('lastName', text)}/>
             <Dropdown baseColor="#89c194" dropdownOffset={{ top: 0, left: 0 }}
@@ -32,22 +40,31 @@ export default class ParentForm extends Component {
                 <Dropdown baseColor="#89c194" dropdownOffset={{ top: 0, left: 0 }} value={this.props.day} onChangeText={this.props.setDay}
                 containerStyle={[styles.select, {width: '30%'}]} label='Day'  data={date.days.days(this.props.month, this.props.year)}/>
                 <Dropdown baseColor="#89c194" dropdownOffset={{ top: 0, left: 0 }} value={this.props.year} onChangeText={this.props.setYear}
-                containerStyle={[styles.select, {width: '30%'}]} label='Yaar'  data={date.years.years()}/>
+                containerStyle={[styles.select, {width: '30%'}]} label='Year'  data={date.years.years()}/>
             </View>
             <Dropdown baseColor="#89c194" dropdownOffset={{ top: 0, left: 0 }} value={this.props.country} onChangeText={this.props.setCountry}
             containerStyle={[styles.select, {width: '100%'}]} label='Country' data={country.country}/>
-            <Dropdown baseColor="#89c194" dropdownOffset={{ top: 0, left: 0 }} value={this.props.region} onChangeText={this.props.setRegion}
-            containerStyle={[styles.select, {width: '100%'}]} label='Region' data={country.region}/>
-            <Text style={styles.bithText}>Chose a calendar</Text>
-            <Dropdown baseColor="#89c194" dropdownOffset={{ top: 0, left: 0 }} value={this.props.calendar} onChangeText={this.props.setCalendar}
-            containerStyle={[styles.select, {width: '100%'}]} label='Catholic' data={date.calendars}/>
+            <Dropdown baseColor="#89c194" dropdownOffset={{ top: 0, left: 0 }} value={this.props.religion} onChangeText={this.props.setRliegion}
+            containerStyle={[styles.select, {width: '100%'}]} label='Religion' data={country.region}/>
+            {this.props.parent_1 &&
+              <>
+              <Text style={styles.bithText}>Chose a calendar</Text>
+              <Dropdown baseColor="#89c194" dropdownOffset={{ top: 0, left: 0 }} value={this.props.calendar} onChangeText={this.props.setCalendar}
+              containerStyle={[styles.select, {width: '100%'}]} label='Catholic' data={date.calendars}/>
+              </>
+            }
+            {!this.props.parent_1 &&
+              <>
+              <TextInput style={styles.input} placeholder="Email" placeholderTextColor="#89c194" name="email" value={this.props.email} onChangeText={(text) => this.props.inputChange('email', text)}/>
+              </>
+            }
             {msg}
             <View style={styles.input} style={styles.btnGroup}>
                 <TouchableOpacity style={styles.btnNext} onPress={this.props.parentValidation}>
                     <Text style={{color: '#fff'}}>Next</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.btnplus} onPress={this.props.change}>
-                    <Text style={{color: '#fff'}}>+</Text>
+                <TouchableOpacity style={styles.btnplus} onPress={this.props.addParentFetch}>
+                    <Text style={{color: '#fff'}}>Add parent</Text>
                 </TouchableOpacity>
             </View>
           </View>
@@ -106,7 +123,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     fontSize: screen.width/25,
-    width: '70%'
+    width: '50%'
   },
 
   btnplus : {
@@ -115,13 +132,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     fontSize: screen.width/25,
-    width: '25%'
+    width: '45%'
   },
 
   title : {
       color: '#fff',
       margin: '6%',
-      fontSize: screen.width/12
+      fontSize: screen.width/12,
+      fontFamily: 'LATO-SEMIBOLD'
   },
 
   select: {

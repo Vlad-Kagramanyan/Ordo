@@ -43,12 +43,11 @@ country = [
 ];
 
  region = [
-    {value: 'Europe'},
-    {value: 'Arab States'},
-    {value: 'Asia & Pacific'},
-    {value: 'South/Latin America'},
-    {value: 'Africa'},
-    {value: 'North America'}
+    {value: 'Christianity'},
+    {value: 'Islam'},
+    {value: 'Hinduism'},
+    {value: 'Buddhism'},
+    {value: 'Folk religion'},
 ];
 
 export default {
