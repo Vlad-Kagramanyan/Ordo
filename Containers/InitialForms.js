@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { ActivityIndicator, Platform, StyleSheet, Text, View, StatusBar, Image } from 'react-native';
-import Signin from '../Components/Signin';
+import Signin from './Signin';
 import ParentForm from '../Components/ParentForm';
 import ChildForm from '../Components/ChildForm';
 import WeeklyVisitation from '../Components/WeeklyVisitation';
@@ -11,7 +11,6 @@ import country from '../constants/country';
 import axios from 'axios';
 
 import * as action from '../store/actions/users';
-console.log('actions ', action)
 
 class InitialForms extends Component {
   state = {
@@ -23,15 +22,15 @@ class InitialForms extends Component {
     email: "",
     msg: "",
     password: "",
-    lastName: "",
-    firstName: "",
-    gender: "",
-    day: "",
-    month: "",
-    year: "",
-    country: "",
-    religion: "",
-    calendar: ""
+    lastName: "Due",
+    firstName: "Jon",
+    gender: "male",
+    day: "13",
+    month: "11",
+    year: "2019",
+    country: "country",
+    religion: "religion",
+    calendar: "calendar"
   }
 
   isEmailAddress = (email) => {
@@ -62,7 +61,7 @@ class InitialForms extends Component {
   parentFetch = () => {
     const { firstName, lastName, gender, day, year, month, country, religion, calendar } = this.state
     console.log('parent fetch')
-    this.props.parent({
+    let data = {
       first_name: firstName,
       last_name: lastName,
       gender: gender,
@@ -70,9 +69,50 @@ class InitialForms extends Component {
       country: country,
       religion: religion,
       calendar: calendar,
+      google_id: this.props.user.data.google_id,
+      email: this.props.user.data.email,
+      token: this.props.user.data.google_token
+    }
+    if (this.props.user.data.parent_id) {
+      data.parent_id = this.props.user.data.parent_id
+    }
+    this.props.parent(data)
+  }
+
+  addParentFetch = () => {
+    const { firstName, lastName, gender, day, year, month, country, religion, email } = this.state
+
+    let data = {
+      first_name: firstName,
+      last_name: lastName,
+      gender: gender,
+      date: `${day}-${year}-${month}`,
+      country: country,
+      religion: religion,
+      email: email,
+      parentCount: this.props.user.parentCount,
       google_id: this.props.user.google_id,
-      email: this.props.user.email
-    })
+      parent_id: this.props.user.data.parent_id
+    }
+
+    if(this.props.user.parentCount == 1) {
+      data.email = this.props.user.data.email
+    }
+    console.log('addparent fetch')
+    if (this.state.lastName.length < 1 &&
+      this.state.firstName.length < 1
+      && this.state.gender.length < 1
+      && this.state.day.length < 1
+      && this.state.month.length < 1
+      && this.state.year.length < 1
+      && this.state.country.length < 1
+      && this.state.religion.length < 1
+      && this.state.email.length < 1) {
+      this.setState({ msg: "all filds shuld be filed" })
+    } else {
+      this.props.addParent(data)
+    }
+
   }
 
   reset = () => {
@@ -91,36 +131,6 @@ class InitialForms extends Component {
       religion: "",
       calendar: ""
     })
-  }
-
-  addParentFetch = () => {
-    const { firstName, lastName, gender, day, year, month, country, religion, email } = this.state
-    console.log('addparent fetch')
-    if (this.state.lastName.length < 1 &&
-      this.state.firstName.length < 1
-      && this.state.gender.length < 1
-      && this.state.day.length < 1
-      && this.state.month.length < 1
-      && this.state.year.length < 1
-      && this.state.country.length < 1
-      && this.state.religion.length < 1
-      && this.state.email.length < 1) {
-      this.setState({ msg: "all filds shuld be filed" })
-    } else {
-      console.log('all right')
-      this.props.addParent({
-        first_name: firstName,
-        last_name: lastName,
-        gender: gender,
-        date: `${day}-${year}-${month}`,
-        country: country,
-        religion: religion,
-        email: email,
-        parentCount: this.props.user.parentCount,
-        google_id: this.props.user.google_id
-      })
-    }
-
   }
 
   childFetch = () => {
@@ -192,44 +202,13 @@ class InitialForms extends Component {
     this.props.week(data)
   }
 
-  setGender = (value, index, data) => {
-    this.setState({ gender: value })
+  setData = (value, property) => {
+    this.setState({ [property]: value })
   }
 
   setMonth = (value, index, data) => {
     const selectedMonthObj = data.filter((obj) => value == obj.value);
     this.setState({ month: selectedMonthObj[0].name })
-  }
-
-  setYear = (value, index, data) => {
-    this.setState({ year: value })
-  }
-
-  setDay = (value, index, data) => {
-    this.setState({ day: value })
-  }
-
-  setCountry = (value, index, data) => {
-    this.setState({ country: value })
-  }
-
-  setReligion = (value, index, data) => {
-    this.setState({ religion: value })
-  }
-
-  setCalendar = (value, index, data) => {
-    this.setState({ calendar: value })
-  }
-
-  ChangeToFreePaid = () => {
-    console.log('sssssssssssssssssss')
-    // this.setState({
-    //   signin: false,
-    //   parentForm: false,
-    //   childForm: false,
-    //   WeeklyVisitation: false,
-    //   FreePaid: true
-    // })
   }
 
   inputChange = (target, value) => {
@@ -286,29 +265,20 @@ class InitialForms extends Component {
           calendar={this.state.calendar}
           parentValidation={this.parentValidation}
           inputChange={(target, value) => this.inputChange(target, value)}
-          setGender={this.setGender}
+          setData={this.setData}
           setMonth={this.setMonth}
-          setYear={this.setYear}
-          setDay={this.setDay}
-          setCountry={this.setCountry}
-          setRliegion={this.setReligion}
-          setCalendar={this.setCalendar}
           parentFetch={this.parentFetch}
           addParentFetch={this.addParentFetch}
         />
       );
-    } else if (this.props.user.paid || this.state.FreePaid) {
-      return (
-        <FreePaid />
-      );
     }
     else if (this.props.user.week) {
       return (
-        <WeeklyVisitation change1={this.ChangeToFreePaid}
+        <WeeklyVisitation
           countValChilds={countValChilds}
           parentCount={this.props.user.parentCount}
           countValParents={countValParents}
-          weekFetch={(data)=>this.weekFetch(data)} />
+          weekFetch={(data) => this.weekFetch(data)} />
       );
     } else if (this.props.child) {
       return (
@@ -323,10 +293,8 @@ class InitialForms extends Component {
           month={this.state.month}
           year={this.state.year}
           inputChange={(target, value) => this.inputChange(target, value)}
-          setGender={this.setGender}
           setMonth={this.setMonth}
-          setYear={this.setYear}
-          setDay={this.setDay}
+          setData={this.setData}
           msg={msg}
           childCount={this.props.childCount} />
       );
@@ -336,7 +304,7 @@ class InitialForms extends Component {
 
 mapStateToProps = (state) => {
   return {
-    user: state 
+    user: state
   }
 }
 

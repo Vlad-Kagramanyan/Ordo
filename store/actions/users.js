@@ -54,9 +54,8 @@ export function loginRequest(dispatch, data) {
 
 export function parentRequest(dispatch, data) {
   dispatch({ type: PARENT_REQUEST })
-  axios.post('http://myworks.site/dev/calendar_based_api/public/api/register',
-    {
-      first_name: data.first_name,
+  const requestData = {
+    first_name: data.first_name,
       last_name: data.last_name,
       gender: data.gender,
       birth_date: data.date,
@@ -65,13 +64,20 @@ export function parentRequest(dispatch, data) {
       calendar: data.calendar,
       family_id: '',
       google_id: data.google_id,
-      email: data.email
-    },
-    { headers: { "Authorization": `Bearer ${token}` } }
+      email: data.email,
+      token: data.token
+  }
+
+  if (data.parentCount == 1) {
+    datas.family_id = ""
+    datas.calendar = data.calendar
+  }
+  axios.post('http://myworks.site/dev/calendar_based_api/public/api/register',
+    requestData
   )
     .then((response) => {
       console.log('res token', response)
-      dispatch({ type: PARENT_REQUEST_SUCCESS, payload: 'data' })
+      dispatch({ type: PARENT_REQUEST_SUCCESS, payload: response.data.success })
     }).catch((err) => {
       console.log('error', err.response.data)
       let msg = parseError(err.response.data.message)
@@ -95,9 +101,6 @@ export function addParentRequest(dispatch, data) {
   if (data.parentCount == 1) {
     datas.family_id = ""
     datas.calendar = data.calendar
-  } else {
-    datas.email = data.email
-    datas.family_id = ""
   }
   axios.post('http://myworks.site/dev/calendar_based_api/public/api/register',
     datas,
@@ -105,7 +108,7 @@ export function addParentRequest(dispatch, data) {
   )
     .then((response) => {
       console.log('res token', response)
-      dispatch({ type: ADD_PARENT_REQUEST_SUCCESS, payload: 'data' })
+      dispatch({ type: PARENT_REQUEST_SUCCESS, payload: response.data.success })
     }).catch((err) => {
       console.log('error', err.response.data)
       let msg = parseError(err.response.data.message)

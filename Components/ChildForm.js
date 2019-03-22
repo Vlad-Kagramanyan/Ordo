@@ -37,14 +37,14 @@ export default class ChildForm extends Component {
           <TextInput style={styles.input} placeholder="Last name" placeholderTextColor="#89c194" value={this.props.lastName} onChangeText={(text) => this.props.inputChange('lastName', text)} />
           <Dropdown baseColor="#89c194" dropdownOffset={{ top: 0, left: 0 }}
             containerStyle={[styles.select, { width: '100%' }]} label='Gender' data={[{ value: 'male' }, { value: 'female' }]}
-            value={this.props.gender} onChangeText={this.props.setGender} />
+            value={this.props.gender} onChangeText={(val)=>this.props.setData(val, 'gender')} />
           <Text style={styles.bithText}>Bith day</Text>
           <View style={styles.bithDatewrapper}>
             <Dropdown baseColor="#89c194" dropdownOffset={{ top: 0, left: 0 }} value={this.props.month} onChangeText={this.props.setMonth}
               containerStyle={[styles.select, { width: '30%' }]} label='Month' data={date.months} />
-            <Dropdown baseColor="#89c194" dropdownOffset={{ top: 0, left: 0 }} value={this.props.day} onChangeText={this.props.setDay}
+            <Dropdown baseColor="#89c194" dropdownOffset={{ top: 0, left: 0 }} value={this.props.day} onChangeText={(val)=>this.props.setData(val, 'day')}
               containerStyle={[styles.select, { width: '30%' }]} label='Day' data={date.days.days(this.props.month, this.props.year)} />
-            <Dropdown baseColor="#89c194" dropdownOffset={{ top: 0, left: 0 }} value={this.props.year} onChangeText={this.props.setYear}
+            <Dropdown baseColor="#89c194" dropdownOffset={{ top: 0, left: 0 }} value={this.props.year} onChangeText={(val)=>this.props.setData(val, 'year')}
               containerStyle={[styles.select, { width: '30%' }]} label='Yaar' data={date.years.years()} />
           </View>
           {msg}

@@ -3,7 +3,7 @@ import screen from '../constants/screen';
 import {TouchableOpacity, ScrollView, Image, ImageBackground, StyleSheet, Text, View} from 'react-native';
 import { GoogleSignin, statusCodes, GoogleSigninButton } from 'react-native-google-signin';
 import fonts from '../src/utils/fonts';
-import LoginForm from './LoginForm';
+import LoginForm from '../Components/LoginForm';
 
 export default class Signin extends Component {
   state = {

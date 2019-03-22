@@ -32,24 +32,24 @@ export default class ParentForm extends Component {
           <TextInput style={styles.input} placeholder="Last name" placeholderTextColor="#89c194" name="lastName" value={this.props.lastName} onChangeText={(text) => this.props.inputChange('lastName', text)} />
           <Dropdown baseColor="#89c194" dropdownOffset={{ top: 0, left: 0 }}
             containerStyle={[styles.select, { width: '100%' }]} label='Gender' data={[{ value: 'male' }, { value: 'female' }]}
-            value={this.props.gender} onChangeText={this.props.setGender} />
+            value={this.props.gender} onChangeText={(val)=>this.props.setData(val, 'gender')} />
           <Text style={styles.bithText}>Bith day</Text>
           <View style={styles.bithDatewrapper}>
             <Dropdown baseColor="#89c194" dropdownOffset={{ top: 0, left: 0 }} value={this.props.month} onChangeText={this.props.setMonth}
               containerStyle={[styles.select, { width: '30%' }]} label='Month' data={date.months} />
-            <Dropdown baseColor="#89c194" dropdownOffset={{ top: 0, left: 0 }} value={this.props.day} onChangeText={this.props.setDay}
+            <Dropdown baseColor="#89c194" dropdownOffset={{ top: 0, left: 0 }} value={this.props.day} onChangeText={(val)=>this.props.setData(val, 'day')}
               containerStyle={[styles.select, { width: '30%' }]} label='Day' data={date.days.days(this.props.month, this.props.year)} />
-            <Dropdown baseColor="#89c194" dropdownOffset={{ top: 0, left: 0 }} value={this.props.year} onChangeText={this.props.setYear}
+            <Dropdown baseColor="#89c194" dropdownOffset={{ top: 0, left: 0 }} value={this.props.year} onChangeText={(val)=>this.props.setData(val, 'year')}
               containerStyle={[styles.select, { width: '30%' }]} label='Year' data={date.years.years()} />
           </View>
-          <Dropdown baseColor="#89c194" dropdownOffset={{ top: 0, left: 0 }} value={this.props.country} onChangeText={this.props.setCountry}
+          <Dropdown baseColor="#89c194" dropdownOffset={{ top: 0, left: 0 }} value={this.props.country} onChangeText={(val)=>this.props.setData(val, 'country')}
             containerStyle={[styles.select, { width: '100%' }]} label='Country' data={country.country} />
-          <Dropdown baseColor="#89c194" dropdownOffset={{ top: 0, left: 0 }} value={this.props.religion} onChangeText={this.props.setRliegion}
+          <Dropdown baseColor="#89c194" dropdownOffset={{ top: 0, left: 0 }} value={this.props.religion} onChangeText={(val)=>this.props.setData(val, 'religion')}
             containerStyle={[styles.select, { width: '100%' }]} label='Religion' data={country.region} />
           {this.props.parent_1 &&
             <>
               <Text style={styles.bithText}>Chose a calendar</Text>
-              <Dropdown baseColor="#89c194" dropdownOffset={{ top: 0, left: 0 }} value={this.props.calendar} onChangeText={this.props.setCalendar}
+              <Dropdown baseColor="#89c194" dropdownOffset={{ top: 0, left: 0 }} value={this.props.calendar} onChangeText={(val)=>this.props.setData(val, 'calendar')}
                 containerStyle={[styles.select, { width: '100%' }]} label='Catholic' data={date.calendars} />
             </>
           }

@@ -24,53 +24,64 @@ import {
 const initialState = {
     isloading: false,
     loaded: false,
+    childsID: [],
+    parentsID: [],
     data: {},
     error: "",
     parent1: true,
-    week: true,
-    parentCount: 2,
+    login: true,
+    parentCount: 1,
     child1: true,
-    childCount: 2
+    childCount: 1
 }
 
 export default function user(state = initialState, action) {
     switch (action.type) {
         case REGiSTER_REQUEST_SUCCESS:
-            console.log('reg reducer')
-            return { ...state, ...{ loaded: true, login: false, parent: true }, data: { token: action.payload.accessToken, google_id: action.payload.id, email: action.payload.email, } }
+            return { ...state, ...{ loaded: true, login: false, parent: true }, data: { google_token: action.payload.accessToken, google_id: action.payload.id, email: action.payload.email, } }
 
         case LOGIN_REQUEST:
             return { ...state, ...{ isloading: true, error: "", } }
         case LOGIN_REQUEST_SUCCESS:
-            return { ...state, ...{ isloading: false, loaded: true, login: false, paid: true }, data: { token: action.payload.token, email: action.payload.email, } }
+            return { ...state, ...{ isloading: false, loaded: true, login: false, parent: true }, data: { token: action.payload.token, email: action.payload.email, } }
         case LOGIN_REQUEST_FAILURE:
             return { ...state, ...{ error: action.payload, isloading: false } }
 
         case PARENT_REQUEST:
             return { ...state, ...{ isloading: true, error: "", } }
         case PARENT_REQUEST_SUCCESS:
-            return { ...state, ...{ isloading: false, loaded: true, parent: false, child: true }, data: {} }
+            let parentsID = Object.assign([], state.parentsID);
+            parentsID.push({ parent_id: action.payload.parent_id })
+            return { ...state, ...{ isloading: false, parent1: false, loaded: true, child: true, parent: false,   parentsID, parentsID }, data: {token: action.payload.token } }
         case PARENT_REQUEST_FAILURE:
             return { ...state, ...{ error: action.payload, isloading: false } }
 
         case ADD_PARENT_REQUEST:
+            console.log('add parent requrest')
             return { ...state, ...{ isloading: true, error: "", } }
         case ADD_PARENT_REQUEST_SUCCESS:
-            return { ...state, ...{ parentCount: state.parentCount + 1, isloading: false, loaded: true, parent1: false }, data: {} }
+            let parentsID2 = Object.assign([], state.parentsID);
+            parentsID2.push({ parent_id: action.payload.parent_id })
+            return { ...state, ...{ parentCount: state.parentCount + 1, isloading: false, child: false, loaded: true, parent1: false, parentsID: parentsID2 }, data: {  token: action.payload.token} }
         case ADD_PARENT_REQUEST_FAILURE:
             return { ...state, ...{ error: action.payload, isloading: false } }
 
         case CHILD_REQUEST:
             return { ...state, ...{ isloading: true, error: "", } }
         case CHILD_REQUEST_SUCCESS:
-            return { ...state, ...{ isloading: false, loaded: true, child: false, week: true }, data: {} }
+            let childsID = Object.assign([], state.childsID);
+            childsID.push({ child_id: action.payload.child_id })
+            return { ...state, ...{ isloading: false, loaded: true, child: false, week: true, childsID: childsID }, data: {} }
         case CHILD_REQUEST_FAILURE:
             return { ...state, ...{ error: action.payload, isloading: false } }
 
         case ADD_CHILD_REQUEST:
+        console.log('add child request')
             return { ...state, ...{ isloading: true, error: "", } }
         case ADD_CHILD_REQUEST_SUCCESS:
-            return { ...state, ...{ parentCount: state.childCount + 1, isloading: false, loaded: true, child1: false }, data: {} }
+            let childsID2 = Object.assign([], state.childsID);
+            childsID2.push({ child_id: action.payload.child_id })
+            return { ...state, ...{ parentCount: state.childCount + 1, isloading: false, loaded: true, child1: false, childsID: childIsD2 }, data: {} }
         case ADD_CHILD_REQUEST_FAILURE:
             return { ...state, ...{ error: action.payload, isloading: false } }
 
