@@ -14,11 +14,6 @@ import * as action from '../store/actions/users';
 
 class InitialForms extends Component {
   state = {
-    signin: false,
-    parentForm: false,
-    childForm: false,
-    WeeklyVisitation: false,
-    FreePaid: false,
     email: "",
     msg: "",
     password: "",
@@ -96,7 +91,7 @@ class InitialForms extends Component {
     }
 
     if(this.props.user.parentCount == 1) {
-      data.email = this.props.user.data.email
+      data.email = this.props.user.data.email || 'email1@mail.ru'
     }
     console.log('addparent fetch')
     if (this.state.lastName.length < 1 &&

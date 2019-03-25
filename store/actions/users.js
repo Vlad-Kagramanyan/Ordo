@@ -76,10 +76,8 @@ export function parentRequest(dispatch, data) {
     requestData
   )
     .then((response) => {
-      console.log('res token', response)
       dispatch({ type: PARENT_REQUEST_SUCCESS, payload: response.data.success })
     }).catch((err) => {
-      console.log('error', err.response.data)
       let msg = parseError(err.response.data.message)
       dispatch({ type: PARENT_REQUEST_FAILURE, payload: msg })
     })
@@ -107,10 +105,8 @@ export function addParentRequest(dispatch, data) {
     { headers: { "Authorization": `Bearer ${token}` } }
   )
     .then((response) => {
-      console.log('res token', response)
-      dispatch({ type: PARENT_REQUEST_SUCCESS, payload: response.data.success })
+      dispatch({ type: ADD_PARENT_REQUEST_SUCCESS, payload: response.data.success })
     }).catch((err) => {
-      console.log('error', err.response.data)
       let msg = parseError(err.response.data.message)
       dispatch({ type: ADD_PARENT_REQUEST_FAILURE, payload: msg })
     })
@@ -129,12 +125,9 @@ export function childRequest(dispatch, data) {
     { headers: { "Authorization": `Bearer ${token}` } }
   )
     .then((response) => {
-      console.log('res token', response)
-      dispatch({ type: CHILD_REQUEST_SUCCESS, payload: 'data' })
+      dispatch({ type: CHILD_REQUEST_SUCCESS, payload: response.data.data })
     }).catch((err) => {
-      console.log('error', err)
       let msg = parseError(err.response.data.message)
-      console.log('msgg', msg)
       dispatch({ type: CHILD_REQUEST_FAILURE, payload: msg })
     })
 }
@@ -151,13 +144,10 @@ export function addChildRequest(dispatch, data) {
     { headers: { "Authorization": `Bearer ${token}` } }
   )
     .then((response) => {
-      console.log('res token', response)
-      dispatch({ type: ADD_CHILD_REQUEST_SUCCESS, payload: 'data' })
+      dispatch({ type: ADD_CHILD_REQUEST_SUCCESS, payload: response.data.data })
     }).catch((err) => {
-      console.log('error', err)
       let msg = parseError(err.response.data.message)
-      console.log('msgg', msg)
-      dispatch({ type: CHILD_REQUEST_FAILURE, payload: msg })
+      dispatch({ type: ADD_CHILD_REQUEST_FAILURE, payload: msg })
     })
 }
 

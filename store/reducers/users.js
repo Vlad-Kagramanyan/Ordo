@@ -57,7 +57,6 @@ export default function user(state = initialState, action) {
             return { ...state, ...{ error: action.payload, isloading: false } }
 
         case ADD_PARENT_REQUEST:
-            console.log('add parent requrest')
             return { ...state, ...{ isloading: true, error: "", } }
         case ADD_PARENT_REQUEST_SUCCESS:
             let parentsID2 = Object.assign([], state.parentsID);
@@ -76,12 +75,11 @@ export default function user(state = initialState, action) {
             return { ...state, ...{ error: action.payload, isloading: false } }
 
         case ADD_CHILD_REQUEST:
-        console.log('add child request')
             return { ...state, ...{ isloading: true, error: "", } }
         case ADD_CHILD_REQUEST_SUCCESS:
             let childsID2 = Object.assign([], state.childsID);
             childsID2.push({ child_id: action.payload.child_id })
-            return { ...state, ...{ parentCount: state.childCount + 1, isloading: false, loaded: true, child1: false, childsID: childIsD2 }, data: {} }
+            return { ...state, ...{ parentCount: state.childCount + 1, isloading: false, loaded: true, child1: false, childsID: childsID2 }, data: {} }
         case ADD_CHILD_REQUEST_FAILURE:
             return { ...state, ...{ error: action.payload, isloading: false } }
 
