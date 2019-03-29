@@ -216,14 +216,16 @@ class InitialForms extends Component {
     console.log('props ', this.props.user)
     const msg = this.state.msg || this.props.user.error
     let countValChilds = [];
-    for (let i = 1; i <= this.props.user.childCount; i++) {
-      countValChilds.push({ label: `Child ${i}`, value: i - 1 })
+    for (let i = 1; i <= this.props.user.childsID.length; i++) {
+      countValChilds.push({ label: `Child ${i}`, value: this.props.user.childsID[i-1] })
     }
 
     let countValParents = [];
-    for (let i = 1; i <= this.props.user.parentCount; i++) {
-      countValParents.push({ value: i - 1 })
+    for (let i = 1; i <= this.props.user.parentsID.length; i++) {
+      countValParents.push({ value: this.props.user.parentsID[i-1] })
     }
+
+    console.log('props1 ',  this.props.user.parentsID)
 
     if (this.props.user.isloading) {
       return (
@@ -273,7 +275,9 @@ class InitialForms extends Component {
           countValChilds={countValChilds}
           parentCount={this.props.user.parentCount}
           countValParents={countValParents}
-          weekFetch={(data) => this.weekFetch(data)} />
+          weekFetch={(data) => this.weekFetch(data)} 
+          childsID={this.props.user.childsID}
+          parentID={this.props.user.parentID}/>
       );
     } else if (this.props.child) {
       return (

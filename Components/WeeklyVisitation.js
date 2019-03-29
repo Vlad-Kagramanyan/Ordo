@@ -102,23 +102,25 @@ export default class WeeklyVisitation extends Component {
   }
 
   SelectRadioBtn = (valueName, value) => {
+    console.log('value child', value)
     this.resetSelectedDays()
     this.childrenInfo()
     this.setState({
-      [valueName]: value
+      [valueName]: value[valueName]
     })
   }
 
   SelectRadioBtn2 = (valueName, underValueName, value) => {
+    console.log('value', value)
     let arr = Object.assign({}, this.state.selectedDays);
-    arr[valueName][underValueName] = value
+    arr[valueName][underValueName] = value[underValueName]
     this.setState({
       selectedDays: arr
     })
   }
 
   render() {
-    console.log('state', this.state.childinfo)
+    console.log('state', this.state.selectedDays)
     let parentCount = "";
     for (let i = 1; i <= this.props.parentCount; i++) {
       parentCount += `p${i}/ `;
@@ -160,10 +162,10 @@ export default class WeeklyVisitation extends Component {
                     <Text style={styles.title}>{item.day}</Text>
                   </View>
                   <ChildRadioBtn
-                    underValueName={'parent'}
+                    underValueName={'parent_id'}
                     valueName={item.valName}
                     radio_props={this.props.countValParents}
-                    value={this.state.selectedDays[item.valName]['parent']}
+                    value={this.state.selectedDays[item.valName]['parent_id']}
                     SelectRadioBtn={(valueName, underValueName, value) => this.SelectRadioBtn2(valueName, underValueName, value)} />
                   <TouchableOpacity style={{ width: 45, marginTop: -10 }} onPress={() => this.showModal(index)}>
                     <Image source={require('../images/Childtimearrowright.png')} style={{ width: '100%', height: 30 }} />

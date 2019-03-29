@@ -24,12 +24,12 @@ import {
 const initialState = {
     isloading: false,
     loaded: false,
-    childsID: [],
-    parentsID: [],
-    data: {},
+    childsID: [{child_id: 45}, {child_id: 46}],
+    parentsID: [{parent_id: 45},{parent_id: 46}],
+    data: {email: 'email@mail.com', token: 'token'},
     error: "",
     parent1: true,
-    login: true,
+    week: true,
     parentCount: 1,
     child1: true,
     childCount: 1

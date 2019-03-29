@@ -16,7 +16,7 @@ export default class WeeklyVisitation extends Component {
                         <RadioButtonLabel
                             obj={obj}
                             index={i}
-                            onPress={this.props.underValueName ? (value) => this.props.SelectRadioBtn(this.props.valueName, this.props.underValueName, value) : (value) => this.props.SelectRadioBtn(this.props.valueName, value)}
+                            onPress={this.props.underValueName ? (value) => this.props.SelectRadioBtn(this.props.valueName, this.props.underValueName, obj.value) : (value) => this.props.SelectRadioBtn(this.props.valueName, value)}
                             labelHorizontal={true}
                             labelStyle={{ fontSize: 20, color: '#ffffff' }}
                             labelWrapStyle={{}}
@@ -24,9 +24,9 @@ export default class WeeklyVisitation extends Component {
                         <RadioButtonInput
                             obj={obj}
                             index={i}
-                            isSelected={this.props.value === i}
+                            isSelected={this.props.value === obj.value}
                             borderWidth={10}
-                            onPress={this.props.underValueName ? (value) => this.props.SelectRadioBtn(this.props.valueName, this.props.underValueName, value) : (value) => this.props.SelectRadioBtn(this.props.valueName, value)}
+                            onPress={this.props.underValueName ? (value) => this.props.SelectRadioBtn(this.props.valueName, this.props.underValueName, obj.value) : (value) => this.props.SelectRadioBtn(this.props.valueName, value)}
                             buttonInnerColor='gray'
                             buttonOuterColor={'white'}
                             buttonSize={15}
