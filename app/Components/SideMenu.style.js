@@ -5,10 +5,12 @@ export default {
       position: 'relative'
     },
     navItemStyle: {
-      padding: 10
+      // padding: 10,
+      // paddingLeft: 40,
+      color: 'white'
     },
     navSectionStyle: {
-      backgroundColor: 'lightgrey'
+      border: 'none'
     },
     sectionHeadingStyle: {
       paddingVertical: 10,
@@ -17,5 +19,8 @@ export default {
     footerContainer: {
       padding: 20,
       backgroundColor: 'lightgrey'
+    },
+    itemColor: {
+      color: 'white'
     }
   };

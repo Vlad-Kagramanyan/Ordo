@@ -29,7 +29,7 @@ const initialState = {
     data: {email: 'email@mail.com', token: 'token'},
     error: "",
     parent1: true,
-    week: true,
+    login: true,
     parentCount: 1,
     child1: true,
     childCount: 1
@@ -43,7 +43,7 @@ export default function user(state = initialState, action) {
         case LOGIN_REQUEST:
             return { ...state, ...{ isloading: true, error: "", } }
         case LOGIN_REQUEST_SUCCESS:
-            return { ...state, ...{ isloading: false, loaded: true, login: false, parent: true }, data: { token: action.payload.token, email: action.payload.email, } }
+            return { ...state, ...{ isloading: false, loaded: true, login: false, main: true }, data: { token: action.payload.token, email: action.payload.email, } }
         case LOGIN_REQUEST_FAILURE:
             return { ...state, ...{ error: action.payload, isloading: false } }
 

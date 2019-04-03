@@ -5,6 +5,7 @@ import Signin from './Signin';
 import ParentForm from '../Components/ParentForm';
 import ChildForm from '../Components/ChildForm';
 import WeeklyVisitation from './WeeklyVisitation';
+import Home from './Home';
 import date from '../constants/date';
 import country from '../constants/country';
 import axios from 'axios';
@@ -243,7 +244,12 @@ class InitialForms extends Component {
           userLogin={this.userLogin}
           inputChange={(target, value) => this.inputChange(target, value)} />
       );
-    } else if (this.props.user.parent) {
+    }else if (this.props.user.main) {
+      return (
+        <Home/>
+      );
+    } 
+    else if (this.props.user.parent) {
       return (
         <ParentForm
           reset={this.reset}
@@ -297,6 +303,7 @@ class InitialForms extends Component {
           childCount={this.props.childCount} />
       );
     }
+     
   }
 }
 
