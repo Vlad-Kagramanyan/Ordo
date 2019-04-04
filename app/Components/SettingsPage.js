@@ -6,31 +6,12 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import { Container, Thumbnail, Content, Radio,  Body, Button, Right, Col, List, Toast, ListItem, Text, Separator } from 'native-base'
+import { Container, Thumbnail, Root, Content, Radio,  Body, Button, Right, Col, List, Toast, ListItem, Text, Separator } from 'native-base'
 
-class SettingsPage extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      googleMerge: false,
-      childDays: [
-        { day: 'mo', valName: 'selectedMunRadioBtn', show: false, on: false },
-        { day: 'tu', valName: 'selectedTueRadioBtn', show: false, on: false},
-        { day: 'we', valName: 'selectedWedRadioBtn', show: false, on: false},
-        { day: 'th', valName: 'selectedThuRadioBtn', show: false, on: false},
-        { day: 'fr', valName: 'selectedSutRadioBtn', show: false, on: false},
-        { day: 'sa', valName: 'selectedSutRadioBtn', show: false, on: false},
-        { day: 'su', valName: 'selectedSunRadioBtn', show: false, on: false}
-      ],
-    }
-  }
-
-  handleCheckbox = () => {
-    this.setState({ googleMerge: !this.state.googleMerge })
-  }
-
-  render() {
+export default SettingsPage = ({childDays, googleMerge, handleCheckbox}) => {
+    console.log('childays ', childDays, googleMerge)
     return (
+      <Root>
       <Container >
         <Content>
           <Content contentContainerStyle={{ flex: 1, flexDirection: 'row', justifyContent: 'center', padding: 10 }} >
@@ -58,7 +39,7 @@ class SettingsPage extends Component {
             <Content>
               <Text style={{ color: '#c4c4c4' }}>choosing the start of the week day</Text>
               <Body style={{ width: 100 + '%', flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between' }}>
-                {this.state.childDays.map((item) => (
+                {childDays.map((item) => (
                   <Body key={item.day} style={{flex:1, flexDirection: 'row'}}>
                     <Radio
                       color={"gray"}
@@ -73,18 +54,18 @@ class SettingsPage extends Component {
           </ListItem>
           <ListItem style={{ width: 100 + '%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
             <Text style={{ color: '#c4c4c4' }}> marging width google calendar</Text>
-            <CheckBox value={this.state.googleMerge}
-              onValueChange={() => this.handleCheckbox()} />
+            <CheckBox value={googleMerge}
+              onValueChange={() => handleCheckbox()} />
           </ListItem>
           <Body style={{ width: 100 + '%', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
             <TouchableOpacity style={styles.btn}>
               <Image source={require('../images/checked.png')} style={{ width: 34, height: 24 }} />
-            </TouchableOpacity>
+            </TouchableOpacity>       
           </Body>
         </Content>
       </Container>
+      </Root>
     );
-  }
 }
 
 const styles = StyleSheet.create({
@@ -104,5 +85,3 @@ const styles = StyleSheet.create({
     marginTop: 5+'%'
   },
 });
-
-export default SettingsPage;

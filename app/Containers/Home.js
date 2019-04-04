@@ -6,7 +6,7 @@ import { AppRegistry, Dimensions } from 'react-native';
 import { createDrawerNavigator, createStackNavigator, createAppContainer } from 'react-navigation';
 
 import SideMenu from '../Components/SideMenu';
-import stackNav from '../Components/stacknav';
+import stackNav from './stacknav';
 
 
 const drawernav = createDrawerNavigator({

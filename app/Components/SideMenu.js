@@ -39,7 +39,7 @@ class SideMenu extends Component {
         <Content>
           <ListItem noBorder icon>
             <Left>
-              <Thumbnail square source={require('../images/calendar-icon.png')} style={{ width: 20, height: 20 }} />
+              <Thumbnail square source={require('../images/calendar-icon.png')} style={{ width: 20, height: 20, marginRight: 5 }} />
             </Left>
             <Body style={styles.navSectionStyle}>
               <Text style={styles.navItemStyle} onPress={this.navigateToScreen('Main')}>Calendar</Text>
@@ -47,7 +47,7 @@ class SideMenu extends Component {
           </ListItem>
           <ListItem noBorder icon>
             <Left>
-              <Thumbnail square source={require('../images/message-icon.png')} style={{ width: 25, height: 17 }} />
+              <Thumbnail square source={require('../images/message-icon.png')} style={{ width: 25, height: 17,}} />
             </Left>
             <Body style={styles.navSectionStyle}>
               <Text style={styles.navItemStyle} onPress={this.navigateToScreen('Messages')}>Messages</Text>
@@ -55,10 +55,50 @@ class SideMenu extends Component {
           </ListItem>
           <ListItem noBorder icon>
             <Left>
-              <Thumbnail square source={require('../images/call-icon.png')} style={{ width: 20, height: 20 }} />
+              <Thumbnail square source={require('../images/call-icon.png')} style={{ width: 20, height: 20,  marginRight: 5 }} />
             </Left>
             <Body style={styles.navSectionStyle}>
               <Text style={styles.navItemStyle} onPress={this.navigateToScreen('Messages')}>Contacts</Text>
+            </Body>
+          </ListItem>
+          <ListItem noBorder icon>
+            <Left>
+              <Thumbnail square source={require('../images/dollar-icon.png')} style={{ width: 20, height: 20,  marginRight: 5 }} />
+            </Left>
+            <Body style={styles.navSectionStyle}>
+              <Text style={styles.navItemStyle} onPress={this.navigateToScreen('Expenses')}>Expenses</Text>
+            </Body>
+          </ListItem>
+          <ListItem noBorder icon>
+            <Left>
+              <Thumbnail square source={require('../images/note-icon.png')} style={{ width: 20, height: 20,  marginRight: 5 }} />
+            </Left>
+            <Body style={styles.navSectionStyle}>
+              <Text style={styles.navItemStyle} >Documents</Text>
+            </Body>
+          </ListItem>
+          <ListItem noBorder icon>
+            <Left>
+              <Thumbnail square source={require('../images/group-icon.png')} style={{ width: 20, height: 20,  marginRight: 5 }} />
+            </Left>
+            <Body style={styles.navSectionStyle}>
+              <Text style={styles.navItemStyle} onPress={this.navigateToScreen('Users')}>Users</Text>
+            </Body>
+          </ListItem>
+          <ListItem noBorder icon>
+            <Left>
+              <Thumbnail square source={require('../images/info-icon.png')} style={{ width: 20, height: 20,  marginRight: 5 }} />
+            </Left>
+            <Body style={styles.navSectionStyle}>
+              <Text style={styles.navItemStyle} >Help</Text>
+            </Body>
+          </ListItem>
+          <ListItem noBorder icon>
+            <Left>
+              <Thumbnail square source={require('../images/logout-icon.png')} style={{ width: 20, height: 20,  marginRight: 5 }} />
+            </Left>
+            <Body style={styles.navSectionStyle}>
+              <Text style={styles.navItemStyle} >Logout</Text>
             </Body>
           </ListItem>
         </Content>

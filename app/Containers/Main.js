@@ -7,7 +7,7 @@ import Home from './Home';
 export default class Main extends Component {
   render() {
       return (
-          <InitialForms/>
+          <Home/>
         );
   }
 }
