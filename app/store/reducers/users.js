@@ -17,16 +17,19 @@ import {
     ADD_CHILD_REQUEST_FAILURE,
     WEEK_REQUEST,
     WEEK_REQUEST_SUCCESS,
-    WEEK_REQUEST_FAILURE
+    WEEK_REQUEST_FAILURE,
+    UPDATE_USER_REQUEST,
+  UPDATE_USER_REQUEST_SUCCESS,
+  UPDATE_USER_REQUEST_FAILURE
 } from '../constants/users';
 
 
 const initialState = {
     isloading: false,
     loaded: false,
-    childsID: [{child_id: 45}, {child_id: 46}],
-    parentsID: [{parent_id: 45},{parent_id: 46}],
-    data: {email: 'email@mail.com', token: 'token'},
+    childsID: [{ child_id: 45 }, { child_id: 46 }],
+    parentsID: [{ parent_id: 45 }, { parent_id: 46 }],
+    data: { email: 'email@mail.com', token: 'token' },
     error: "",
     parent1: true,
     login: true,
@@ -43,7 +46,9 @@ export default function user(state = initialState, action) {
         case LOGIN_REQUEST:
             return { ...state, ...{ isloading: true, error: "", } }
         case LOGIN_REQUEST_SUCCESS:
-            return { ...state, ...{ isloading: false, loaded: true, login: false, main: true }, data: { token: action.payload.token, email: action.payload.email, } }
+            let activeUser ={activeUser: action.payload.family.parents.filter((item) => item.id === action.payload.success.parent_id)}
+            let data = {...action.payload.success, ...action.payload.family, ...activeUser}
+            return { ...state, ...{ isloading: false, loaded: true, login: false, main: true }, data: data }
         case LOGIN_REQUEST_FAILURE:
             return { ...state, ...{ error: action.payload, isloading: false } }
 
@@ -52,7 +57,7 @@ export default function user(state = initialState, action) {
         case PARENT_REQUEST_SUCCESS:
             let parentsID = Object.assign([], state.parentsID);
             parentsID.push({ parent_id: action.payload.parent_id })
-            return { ...state, ...{ isloading: false, parent1: false, loaded: true, child: true, parent: false,   parentsID, parentsID }, data: {token: action.payload.token } }
+            return { ...state, ...{ isloading: false, parent1: false, loaded: true, child: true, parent: false, parentsID, parentsID }, data: { token: action.payload.token } }
         case PARENT_REQUEST_FAILURE:
             return { ...state, ...{ error: action.payload, isloading: false } }
 
@@ -61,7 +66,7 @@ export default function user(state = initialState, action) {
         case ADD_PARENT_REQUEST_SUCCESS:
             let parentsID2 = Object.assign([], state.parentsID);
             parentsID2.push({ parent_id: action.payload.parent_id })
-            return { ...state, ...{ parentCount: state.parentCount + 1, isloading: false, child: false, loaded: true, parent1: false, parentsID: parentsID2 }, data: {  token: action.payload.token} }
+            return { ...state, ...{ parentCount: state.parentCount + 1, isloading: false, child: false, loaded: true, parent1: false, parentsID: parentsID2 }, data: { token: action.payload.token } }
         case ADD_PARENT_REQUEST_FAILURE:
             return { ...state, ...{ error: action.payload, isloading: false } }
 

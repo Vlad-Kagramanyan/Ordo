@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import UsersPage from '../Components/UsersPage';
 
 class Users extends Component {
@@ -8,11 +9,31 @@ class Users extends Component {
         }
     }
 
+    changeUserData = () => {
+        console.log('change data')
+    }
+
     render() {
         return (
-            <UsersPage props={this.props}/>
+            <UsersPage props={this.props} 
+            changeUserData={this.changeUserData}/>
         )
     }
 }
 
-export default Users;
+mapStateToProps = (state) => {
+    return {
+        user: state
+    }
+}
+
+mapDispatchToProps = (dispatch) => {
+    return {
+        changeUserData: (data) => {
+            action.changeUserData(dispatch, data)
+        }
+    }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Users)

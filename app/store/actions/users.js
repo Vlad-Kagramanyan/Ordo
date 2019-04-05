@@ -19,7 +19,10 @@ import {
   ADD_CHILD_REQUEST_FAILURE,
   WEEK_REQUEST,
   WEEK_REQUEST_SUCCESS,
-  WEEK_REQUEST_FAILURE
+  WEEK_REQUEST_FAILURE,
+  UPDATE_USER_REQUEST,
+  UPDATE_USER_REQUEST_SUCCESS,
+  UPDATE_USER_REQUEST_FAILURE
 } from '../constants/users';
 
 import axios from 'axios';
@@ -44,8 +47,8 @@ export function loginRequest(dispatch, data) {
   axios.post('http://myworks.site/dev/calendar_based_api/public/api/login', { email: data.email, password: data.password }
   )
     .then((response) => {
-      console.log('res token', response)
-      dispatch({ type: LOGIN_REQUEST_SUCCESS, payload: response.data.success })
+      console.log('res token', response.data)
+      dispatch({ type: LOGIN_REQUEST_SUCCESS, payload: response.data })
     }).catch((err) => {
       console.log('error 10', err.response.data.message)
       dispatch({ type: LOGIN_REQUEST_FAILURE, payload: err.response.data.message })
@@ -169,5 +172,26 @@ export function weekRequest(dispatch, data) {
       let msg = parseError(err.response.data.message)
       console.log('msgg', msg)
       // dispatch({ type: WEEK_REQUEST_FAILURE, payload: msg })
+    })
+}
+
+
+export function changeUserData(dispatch, data) {
+  console.log('actions', data)
+  dispatch({ type: UPDATE_USER_REQUEST })
+  axios.post('http://myworks.site/dev/calendar_based_api/public/api/users/update',
+    {
+       data
+    },
+    { headers: { "Authorization": `Bearer ${token}` } }
+  )
+    .then((response) => {
+      console.log('res token', response)
+      // dispatch({ type: UPDATE_USER_REQUEST_SUCCESS, payload: 'data' })
+    }).catch((err) => {
+      console.log('error', err)
+      let msg = parseError(err.response.data.message)
+      console.log('msgg', msg)
+      // dispatch({ type: UPDATE_USER_REQUEST_FAILURE, payload: msg })
     })
 }
