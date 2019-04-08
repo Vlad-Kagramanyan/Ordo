@@ -18,14 +18,6 @@ import User from "./User";
 import Expenses from "./Expenses";
 import SideMenu from "../Components/SideMenu";
 
-closeDrawer = () => {
-  this._drawer._root.close()
-};
-
-openDrawer = () => {
-  this._drawer._root.open()
-}
-
 const stackNav = createStackNavigator({
 
   Main: {

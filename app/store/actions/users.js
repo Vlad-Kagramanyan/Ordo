@@ -22,7 +22,10 @@ import {
   WEEK_REQUEST_FAILURE,
   UPDATE_USER_REQUEST,
   UPDATE_USER_REQUEST_SUCCESS,
-  UPDATE_USER_REQUEST_FAILURE
+  UPDATE_USER_REQUEST_FAILURE,
+  ADD_CHILD_DETAILS,
+  ADD_PARENT_DETAILS,
+  ADD_IMAGE
 } from '../constants/users';
 
 import axios from 'axios';
@@ -178,20 +181,34 @@ export function weekRequest(dispatch, data) {
 
 export function changeUserData(dispatch, data) {
   console.log('actions', data)
-  dispatch({ type: UPDATE_USER_REQUEST })
-  axios.post('http://myworks.site/dev/calendar_based_api/public/api/users/update',
-    {
-       data
-    },
-    { headers: { "Authorization": `Bearer ${token}` } }
-  )
-    .then((response) => {
-      console.log('res token', response)
-      // dispatch({ type: UPDATE_USER_REQUEST_SUCCESS, payload: 'data' })
-    }).catch((err) => {
-      console.log('error', err)
-      let msg = parseError(err.response.data.message)
-      console.log('msgg', msg)
-      // dispatch({ type: UPDATE_USER_REQUEST_FAILURE, payload: msg })
-    })
+  // dispatch({ type: UPDATE_USER_REQUEST })
+  // axios.post('http://myworks.site/dev/calendar_based_api/public/api/users/update',
+  //   {
+  //      data
+  //   },
+  //   { headers: { "Authorization": `Bearer ${token}` } }
+  // )
+  //   .then((response) => {
+  //     console.log('res token', response)
+  //     // dispatch({ type: UPDATE_USER_REQUEST_SUCCESS, payload: 'data' })
+  //   }).catch((err) => {
+  //     console.log('error', err)
+  //     let msg = parseError(err.response.data.message)
+  //     console.log('msgg', msg)
+  //     // dispatch({ type: UPDATE_USER_REQUEST_FAILURE, payload: msg })
+  //   })
+}
+
+export function parentDetails(dispatch, id) {
+  console.log('actions', id)
+       dispatch({ type: ADD_PARENT_DETAILS, payload: id })
+}
+
+export function childDetails(dispatch, id) {
+  console.log('actions', id)
+      dispatch({ type: ADD_CHILD_DETAILS, payload: id })
+}
+export function uploadimage(dispatch, img) {
+  console.log('action', img)
+      dispatch({ type: ADD_IMAGE, payload: img })
 }

@@ -19,17 +19,21 @@ import {
     WEEK_REQUEST_SUCCESS,
     WEEK_REQUEST_FAILURE,
     UPDATE_USER_REQUEST,
-  UPDATE_USER_REQUEST_SUCCESS,
-  UPDATE_USER_REQUEST_FAILURE
+    UPDATE_USER_REQUEST_SUCCESS,
+    UPDATE_USER_REQUEST_FAILURE,
+    ADD_CHILD_DETAILS,
+    ADD_PARENT_DETAILS,
+    ADD_IMAGE,
 } from '../constants/users';
 
 
 const initialState = {
     isloading: false,
     loaded: false,
-    childsID: [{ child_id: 45 }, { child_id: 46 }],
-    parentsID: [{ parent_id: 45 }, { parent_id: 46 }],
-    data: { email: 'email@mail.com', token: 'token' },
+    childsID: [],
+    parentsID: [],
+    data: {},
+    userDetails: {},
     error: "",
     parent1: true,
     login: true,
@@ -46,8 +50,8 @@ export default function user(state = initialState, action) {
         case LOGIN_REQUEST:
             return { ...state, ...{ isloading: true, error: "", } }
         case LOGIN_REQUEST_SUCCESS:
-            let activeUser ={activeUser: action.payload.family.parents.filter((item) => item.id === action.payload.success.parent_id)}
-            let data = {...action.payload.success, ...action.payload.family, ...activeUser}
+            let activeUser = { activeUser: action.payload.family.parents.filter((item) => item.id === action.payload.success.parent_id) }
+            let data = { ...action.payload.success, family: action.payload.family, ...activeUser }
             return { ...state, ...{ isloading: false, loaded: true, login: false, main: true }, data: data }
         case LOGIN_REQUEST_FAILURE:
             return { ...state, ...{ error: action.payload, isloading: false } }
@@ -88,7 +92,15 @@ export default function user(state = initialState, action) {
         case ADD_CHILD_REQUEST_FAILURE:
             return { ...state, ...{ error: action.payload, isloading: false } }
 
+        case ADD_CHILD_DETAILS:
+            return { ...state, ...{ userDetails: state.data.family.childs.filter(item => item.id == action.payload) } }
+        case ADD_PARENT_DETAILS:
+            return { ...state, ...{ userDetails: state.data.family.parents.filter(item => item.id == action.payload) } }
 
+        case ADD_IMAGE:
+            const  newActiveUser = [...state.data.activeUser];
+            console.log('acitve user', newActiveUser)
+            return state//{ ...state, data: {...activeUser[0], ...{avatar: action.payload}}}
         default:
             return state
     }

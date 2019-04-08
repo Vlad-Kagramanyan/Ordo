@@ -14,9 +14,9 @@ import * as action from '../store/actions/users';
 
 class InitialForms extends Component {
   state = {
-    email: "",
+    email: "test@gmail.com",
     msg: "",
-    password: "",
+    password: "222222",
     lastName: "Due",
     firstName: "Jon",
     gender: "male",
@@ -55,7 +55,6 @@ class InitialForms extends Component {
 
   parentFetch = () => {
     const { firstName, lastName, gender, day, year, month, country, religion, calendar } = this.state
-    console.log('parent fetch')
     let data = {
       first_name: firstName,
       last_name: lastName,
@@ -93,7 +92,6 @@ class InitialForms extends Component {
     if(this.props.user.parentCount == 1) {
       data.email = this.props.user.data.email || 'email1@mail.ru'
     }
-    console.log('addparent fetch')
     if (this.state.lastName.length < 1 &&
       this.state.firstName.length < 1
       && this.state.gender.length < 1
@@ -111,7 +109,6 @@ class InitialForms extends Component {
   }
 
   reset = () => {
-    console.log('reset')
     this.setState({
       email: "",
       msg: "",
@@ -130,7 +127,6 @@ class InitialForms extends Component {
 
   childFetch = () => {
     const { firstName, lastName, gender, day, year, month } = this.state
-    // console.log('child fetch')
     if (this.state.lastName.length < 1 &&
       this.state.firstName.length < 1
       && this.state.gender.length < 1
@@ -139,7 +135,6 @@ class InitialForms extends Component {
       && this.state.year.length < 1) {
       this.setState({ msg: "all filds shuld be filed" })
     } else {
-      console.log('all right')
       this.props.child({
         first_name: firstName,
         last_name: lastName,
@@ -151,7 +146,6 @@ class InitialForms extends Component {
 
   addChildFetch = () => {
     const { firstName, lastName, gender, day, year, month } = this.state
-    // console.log('child fetch')
     if (this.state.lastName.length < 1 &&
       this.state.firstName.length < 1
       && this.state.gender.length < 1
@@ -160,7 +154,6 @@ class InitialForms extends Component {
       && this.state.year.length < 1) {
       this.setState({ msg: "all filds shuld be filed" })
     } else {
-      console.log('all right')
       this.props.addChild({
         first_name: firstName,
         last_name: lastName,
@@ -172,7 +165,6 @@ class InitialForms extends Component {
 
   googleFetch = (data) => {
     const { accessToken, user: { id, email } } = data
-    console.log('register google fetch')
     this.props.register({ accessToken: accessToken, id: id, email: email })
   }
 
@@ -188,7 +180,6 @@ class InitialForms extends Component {
       && this.state.calendar.length < 1) {
       this.setState({ msg: "all filds shuld be filed" })
     } else {
-      console.log('all right')
       this.parentFetch()
     }
   }
@@ -213,7 +204,6 @@ class InitialForms extends Component {
 
 
   render() {
-    console.log('props ', this.props.user)
     const msg = this.state.msg || this.props.user.error
     let countValChilds = [];
     for (let i = 1; i <= this.props.user.childsID.length; i++) {
@@ -224,8 +214,6 @@ class InitialForms extends Component {
     for (let i = 1; i <= this.props.user.parentsID.length; i++) {
       countValParents.push({ value: this.props.user.parentsID[i-1] })
     }
-
-    console.log('props1 ',  this.props.user.parentsID)
 
     if (this.props.user.isloading) {
       return (

@@ -9,6 +9,7 @@ import SideMenu from '../Components/SideMenu';
 import stackNav from './stacknav';
 
 
+
 const drawernav = createDrawerNavigator({
   Item1: {
       screen: stackNav,

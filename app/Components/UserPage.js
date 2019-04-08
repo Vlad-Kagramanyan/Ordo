@@ -6,12 +6,14 @@ import {
     TouchableOpacity,
     Image
 } from 'react-native';
-import { Container, Thumbnail, Header, Body, Content, List, ListItem, Text } from 'native-base';
+import { Container, Thumbnail, Header, Body, Content, Input, List, ListItem, Text } from 'native-base';
 
-const UserPage = () => {
+
+const UserPage = ({ user, fullNameFlag, changeFlag, inputChange }) => {
+    console.log('page', user)
     return (
         <Container>
-            <Content style={{paddingBottom: 10+'%'}}>
+            <Content style={{ paddingBottom: 10 + '%' }}>
                 <List>
                     <ListItem itemDivider style={{ backgroundColor: '#89ce97' }}>
                         <Text>Child(ren)</Text>
@@ -22,7 +24,7 @@ const UserPage = () => {
                 </Content>
                 <ListItem bordered>
                     <Text style={styles.listKey}>Birth date</Text>
-                    <Text style={styles.listValue}>00 00 00</Text>
+                    <Text style={styles.listValue}>{user.birth_date}</Text>
                 </ListItem>
                 <ListItem>
                     <Text style={styles.listKey}>ID number</Text>
@@ -34,7 +36,10 @@ const UserPage = () => {
                 </ListItem>
                 <ListItem>
                     <Text style={styles.listKey}>Full Name</Text>
-                    <Text style={styles.listValue}>Jhon Due</Text>
+                    {!fullNameFlag ?
+                        <Text style={styles.listValue} onPress={() => changeFlag('fullNameFlag')}>{user.first_name + ' ' + user.last_name}</Text> :
+                        <Input placeholder="Enter full name" style={{ flex: 2, color: '#89c194' }} onChangeText={(text) => inputChange('fullName', text)}
+                        />}
                 </ListItem>
                 <ListItem bordered>
                     <Text style={styles.listKey}>Alergies</Text>
@@ -80,8 +85,8 @@ const styles = StyleSheet.create({
         fontSize: 50,
         width: '20%',
         shadowColor: 'rgba(0, 0, 0, 0.5)',
-        marginTop: 5+'%'
-      },
+        marginTop: 5 + '%'
+    },
 });
 
 export default UserPage;
