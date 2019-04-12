@@ -16,7 +16,7 @@ class InitialForms extends Component {
   state = {
     email: "test@gmail.com",
     msg: "",
-    password: "222222",
+    password: "111111",
     lastName: "Due",
     firstName: "Jon",
     gender: "male",
@@ -70,7 +70,13 @@ class InitialForms extends Component {
     if (this.props.user.data.parent_id) {
       data.parent_id = this.props.user.data.parent_id
     }
-    this.props.parent(data)
+    if(this.props.user.parentCount == 1) {
+      data.family_id = null
+      this.props.parent(data, null)
+    } else {
+      data.family_id = this.props.user.data.family_id
+      this.props.parent(data, this.props.user.data.token)
+    }
   }
 
   addParentFetch = () => {
@@ -89,8 +95,10 @@ class InitialForms extends Component {
       parent_id: this.props.user.data.parent_id
     }
 
-    if(this.props.user.parentCount == 1) {
-      data.email = this.props.user.data.email || 'email1@mail.ru'
+    if (this.props.user.parentCount == 1) {
+      data.email = this.props.user.data.email
+    }else {
+      data.family_id = this.props.user.data.family_id
     }
     if (this.state.lastName.length < 1 &&
       this.state.firstName.length < 1
@@ -103,7 +111,9 @@ class InitialForms extends Component {
       && this.state.email.length < 1) {
       this.setState({ msg: "all filds shuld be filed" })
     } else {
-      this.props.addParent(data)
+      (this.props.user.parentCount == 1) ?
+        this.props.addParent(data, null) :
+        this.props.addParent(data, this.props.user.data.token)
     }
 
   }
@@ -140,7 +150,8 @@ class InitialForms extends Component {
         last_name: lastName,
         gender: gender,
         date: `${day}-${year}-${month}`,
-      })
+        family_id: this.props.user.data.family_id,
+      }, this.props.user.data.token)
     }
   }
 
@@ -159,7 +170,8 @@ class InitialForms extends Component {
         last_name: lastName,
         gender: gender,
         date: `${day}-${year}-${month}`,
-      })
+        family_id: this.props.user.data.family_id,
+      }, this.props.user.data.token)
     }
   }
 
@@ -207,12 +219,12 @@ class InitialForms extends Component {
     const msg = this.state.msg || this.props.user.error
     let countValChilds = [];
     for (let i = 1; i <= this.props.user.childsID.length; i++) {
-      countValChilds.push({ label: `Child ${i}`, value: this.props.user.childsID[i-1] })
+      countValChilds.push({ label: `Child ${i}`, value: this.props.user.childsID[i - 1] })
     }
 
     let countValParents = [];
     for (let i = 1; i <= this.props.user.parentsID.length; i++) {
-      countValParents.push({ value: this.props.user.parentsID[i-1] })
+      countValParents.push({ value: this.props.user.parentsID[i - 1] })
     }
 
     if (this.props.user.isloading) {
@@ -232,11 +244,11 @@ class InitialForms extends Component {
           userLogin={this.userLogin}
           inputChange={(target, value) => this.inputChange(target, value)} />
       );
-    }else if (this.props.user.main) {
+    } else if (this.props.user.main) {
       return (
-        <Home/>
+        <Home />
       );
-    } 
+    }
     else if (this.props.user.parent) {
       return (
         <ParentForm
@@ -268,9 +280,9 @@ class InitialForms extends Component {
           countValChilds={countValChilds}
           parentCount={this.props.user.parentCount}
           countValParents={countValParents}
-          weekFetch={(data) => this.weekFetch(data)} 
+          weekFetch={(data) => this.weekFetch(data)}
           childsID={this.props.user.childsID}
-          parentsID={this.props.user.parentsID}/>
+          parentsID={this.props.user.parentsID} />
       );
     } else if (this.props.child) {
       return (
@@ -291,7 +303,7 @@ class InitialForms extends Component {
           childCount={this.props.childCount} />
       );
     }
-     
+
   }
 }
 
@@ -306,23 +318,23 @@ mapDispatchToProps = (dispatch) => {
     login: (data) => {
       action.loginRequest(dispatch, data)
     },
-    parent: (data) => {
-      action.parentRequest(dispatch, data)
+    parent: (data, token) => {
+      action.parentRequest(dispatch, data, token)
     },
-    addParent: (data) => {
-      action.addParentRequest(dispatch, data)
+    addParent: (data, token) => {
+      action.addParentRequest(dispatch, data, token)
     },
     register: (data) => {
       action.registerRequest(dispatch, data)
     },
-    child: (data) => {
-      action.childRequest(dispatch, data)
+    child: (data, token) => {
+      action.childRequest(dispatch, data, token)
     },
-    addChild: (data) => {
-      action.addChildRequest(dispatch, data)
+    addChild: (data, token) => {
+      action.addChildRequest(dispatch, data, token)
     },
-    week: (data) => {
-      action.weekRequest(dispatch, data)
+    week: (data, token) => {
+      action.weekRequest(dispatch, data, token)
     }
   }
 }

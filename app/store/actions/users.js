@@ -23,10 +23,15 @@ import {
   UPDATE_USER_REQUEST,
   UPDATE_USER_REQUEST_SUCCESS,
   UPDATE_USER_REQUEST_FAILURE,
+  UPDATE_CHILD_REQUEST,
+  UPDATE_CHILD_REQUEST_SUCCESS,
+  UPDATE_CHILD_REQUEST_FAILURE,
   ADD_CHILD_DETAILS,
   ADD_PARENT_DETAILS,
+  ADD_CHILD_IMAGE,
   ADD_IMAGE
 } from '../constants/users';
+import { Toast } from 'native-base';
 
 import axios from 'axios';
 
@@ -38,7 +43,6 @@ parseError = (errors) => {
   return msg
 }
 
-const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjY2M2E0NTk2OWRkMDM2MDhjYmUyMzlkM2U3MmFlYjAyOWJhZWY5ZWYxOWExNDIwNDJmNmJhZGZjMDkxNDI0M2FkZTlmMjMxMWMzYzViZWIxIn0.eyJhdWQiOiIxIiwianRpIjoiNjYzYTQ1OTY5ZGQwMzYwOGNiZTIzOWQzZTcyYWViMDI5YmFlZjllZjE5YTE0MjA0MmY2YmFkZmMwOTE0MjQzYWRlOWYyMzExYzNjNWJlYjEiLCJpYXQiOjE1NTIyOTQ4ODUsIm5iZiI6MTU1MjI5NDg4NSwiZXhwIjoxNTgzOTE3Mjg1LCJzdWIiOiI0Iiwic2NvcGVzIjpbXX0.Y1IIQlOqT6jDHnXmfM5mDslJtJFyoJmDGO7UIowWoTCi8m0mS14glvuTOp2-H0yWnjnANWRxeqnHOohSmlK5F-l4DcOtaYxfpL68a56Z1isAegXvaJXmZFgR35ldG8RKsvlAlaTcJPHg745ChTe2PqlDuX2bWw0jIAGh9e_vCy3WKdYq6_HVbImkt1_qR_SxaHvRu4wIMiRxOxIhUQYBcvWE08Nj9LGSlbjRZRO8Hx27iIhdeSu7crUNflgb8LgaUjhMzVDjqc28OD1etSIHxbv3F2yRDUv5HLpNUPMpp6bWUAKSSJGgtKqNleBxDDC7CTpKhG-lkV6-smVC2XHvXsE7jV0bERfKKcqjpewDswBSCaH-GPcO-ru68-f6t1r-Rbg2YD_Ee0Shurjgp0V9oJ1T21FpWlrBZTrbRNIQimImoacHjxPDQmnX3_AoQh39qMReQny3lXetoqoohtLCIcJLrYqytO7WKGDRb8Wdneaw8NOVKFZKQcBR4o0PlCeupB7JRQckSKLaruZ-jwpiADtSApYNfy7LmfsugafDNjfEBMHeKyvEVr6rhlW4L6sQJCjNZo1Ig8RemMZ26le-F9goB2vnbVXYLr2VkztSv-NTLdzmMGhPMG1hnY41-54jOaKQJ_CQA8tsD60V3GnxCJabmfKc8jCbHa2qmmbw-tU"
 
 export function registerRequest(dispatch, data) {
   dispatch({ type: REGiSTER_REQUEST_SUCCESS, payload: data })
@@ -58,28 +62,29 @@ export function loginRequest(dispatch, data) {
     })
 }
 
-export function parentRequest(dispatch, data) {
+export function parentRequest(dispatch, data, token) {
   dispatch({ type: PARENT_REQUEST })
   const requestData = {
     first_name: data.first_name,
-      last_name: data.last_name,
-      gender: data.gender,
-      birth_date: data.date,
-      country: data.country,
-      religion: data.religion,
-      calendar: data.calendar,
-      family_id: '',
-      google_id: data.google_id,
-      email: data.email,
-      token: data.token
+    last_name: data.last_name,
+    gender: data.gender,
+    birth_date: data.date,
+    country: data.country,
+    religion: data.religion,
+    calendar: data.calendar,
+    family_id: data.family_id || '',
+    google_id: data.google_id,
+    email: data.email,
+    token: data.token,
   }
 
   if (data.parentCount == 1) {
-    datas.family_id = ""
-    datas.calendar = data.calendar
+    requestData.calendar = data.calendar
   }
+  console.log('req data', requestData, data.parentCount)
   axios.post('http://myworks.site/dev/calendar_based_api/public/api/register',
-    requestData
+    requestData,
+    { headers: { "Authorization": `Bearer ${token}` } }
   )
     .then((response) => {
       dispatch({ type: PARENT_REQUEST_SUCCESS, payload: response.data.success })
@@ -89,7 +94,7 @@ export function parentRequest(dispatch, data) {
     })
 }
 
-export function addParentRequest(dispatch, data) {
+export function addParentRequest(dispatch, data, token) {
   dispatch({ type: ADD_PARENT_REQUEST })
   let datas = {
     first_name: data.first_name,
@@ -98,12 +103,11 @@ export function addParentRequest(dispatch, data) {
     birth_date: data.date,
     country: data.country,
     religion: data.religion,
-    family_id: '',
+    family_id: data.family_id || '',
     google_id: data.google_id,
     email: data.email
   };
   if (data.parentCount == 1) {
-    datas.family_id = ""
     datas.calendar = data.calendar
   }
   axios.post('http://myworks.site/dev/calendar_based_api/public/api/register',
@@ -119,7 +123,7 @@ export function addParentRequest(dispatch, data) {
 }
 
 
-export function childRequest(dispatch, data) {
+export function childRequest(dispatch, data, token) {
   dispatch({ type: CHILD_REQUEST })
   axios.post('http://myworks.site/dev/calendar_based_api/public/api/child',
     {
@@ -127,10 +131,12 @@ export function childRequest(dispatch, data) {
       last_name: data.last_name,
       gender: data.gender,
       birth_date: data.date,
+      family_id: data.family_id
     },
     { headers: { "Authorization": `Bearer ${token}` } }
   )
     .then((response) => {
+      console.log('res token', response)
       dispatch({ type: CHILD_REQUEST_SUCCESS, payload: response.data.data })
     }).catch((err) => {
       let msg = parseError(err.response.data.message)
@@ -138,7 +144,7 @@ export function childRequest(dispatch, data) {
     })
 }
 
-export function addChildRequest(dispatch, data) {
+export function addChildRequest(dispatch, data, token) {
   dispatch({ type: ADD_CHILD_REQUEST })
   axios.post('http://myworks.site/dev/calendar_based_api/public/api/child',
     {
@@ -146,11 +152,18 @@ export function addChildRequest(dispatch, data) {
       last_name: data.last_name,
       gender: data.gender,
       birth_date: data.date,
+      family_id: data.family_id
     },
     { headers: { "Authorization": `Bearer ${token}` } }
   )
     .then((response) => {
+      console.log('res token', response)
       dispatch({ type: ADD_CHILD_REQUEST_SUCCESS, payload: response.data.data })
+      Toast.show({
+        text: "success saved!",
+        buttonText: "Ok",
+        duration: 10000
+      })
     }).catch((err) => {
       let msg = parseError(err.response.data.message)
       dispatch({ type: ADD_CHILD_REQUEST_FAILURE, payload: msg })
@@ -158,57 +171,91 @@ export function addChildRequest(dispatch, data) {
 }
 
 
-export function weekRequest(dispatch, data) {
-  console.log('actions')
-  // dispatch({ type: WEEK_REQUEST })
+export function weekRequest(dispatch, data, token) {
+  console.log('actions', )
+  dispatch({ type: LOGIN_REQUEST })
   axios.post('http://myworks.site/dev/calendar_based_api/public/api/visitation',
     {
       childs: data
     },
     { headers: { "Authorization": `Bearer ${token}` } }
   )
+  .then((response) => {
+    console.log('res token', response.data)
+    dispatch({ type: LOGIN_REQUEST_SUCCESS, payload: response.data })
+  }).catch((err) => {
+    console.log('error 10', err.response.data.message)
+    dispatch({ type: LOGIN_REQUEST_FAILURE, payload: err.response.data.message })
+  })
+}
+
+
+export function changeUserData(dispatch, data, token) {
+  console.log('actions', token)
+  dispatch({ type: UPDATE_USER_REQUEST })
+  axios.post('http://myworks.site/dev/calendar_based_api/public/api/users/update',
+    data,
+    { headers: { "Authorization": `Bearer ${token}` } }
+  )
     .then((response) => {
       console.log('res token', response)
-      // dispatch({ type: WEEK_REQUEST_SUCCESS, payload: 'data' })
+      dispatch({ type: UPDATE_USER_REQUEST_SUCCESS, payload: data })
+      Toast.show({
+        text: "changes is saved!",
+        buttonText: "Ok",
+        duration: 10000
+      })
     }).catch((err) => {
-      console.log('error', err)
+      console.log('errorrrrrr', err)
       let msg = parseError(err.response.data.message)
-      console.log('msgg', msg)
-      // dispatch({ type: WEEK_REQUEST_FAILURE, payload: msg })
+      dispatch({ type: UPDATE_USER_REQUEST_FAILURE, payload: msg })
     })
 }
 
 
-export function changeUserData(dispatch, data) {
-  console.log('actions', data)
-  // dispatch({ type: UPDATE_USER_REQUEST })
-  // axios.post('http://myworks.site/dev/calendar_based_api/public/api/users/update',
-  //   {
-  //      data
-  //   },
-  //   { headers: { "Authorization": `Bearer ${token}` } }
-  // )
-  //   .then((response) => {
-  //     console.log('res token', response)
-  //     // dispatch({ type: UPDATE_USER_REQUEST_SUCCESS, payload: 'data' })
-  //   }).catch((err) => {
-  //     console.log('error', err)
-  //     let msg = parseError(err.response.data.message)
-  //     console.log('msgg', msg)
-  //     // dispatch({ type: UPDATE_USER_REQUEST_FAILURE, payload: msg })
-  //   })
+export function changeChlidData(dispatch, data, token) {
+  console.log('actions', token)
+  dispatch({ type: UPDATE_CHILD_REQUEST })
+  axios.post('http://myworks.site/dev/calendar_based_api/public/api/childUpdate',
+    data,
+    { headers: { "Authorization": `Bearer ${token}` } }
+  )
+    .then((response) => {
+      console.log('res token', response)
+      dispatch({ type: UPDATE_CHILD_REQUEST_SUCCESS, payload: data })
+      Toast.show({
+        text: "changes is saved!",
+        buttonText: "Ok",
+        duration: 10000
+      })
+    }).catch((err) => {
+      console.log('errorrrrrr', err)
+      let msg = parseError(err.response.data.message)
+      dispatch({ type: UPDATE_CHILD_REQUEST_FAILURE, payload: msg })
+      Toast.show({
+        text: msg,
+        buttonText: "Ok",
+        duration: 10000
+      })
+    })
 }
 
 export function parentDetails(dispatch, id) {
   console.log('actions', id)
-       dispatch({ type: ADD_PARENT_DETAILS, payload: id })
+  dispatch({ type: ADD_PARENT_DETAILS, payload: id })
 }
 
 export function childDetails(dispatch, id) {
   console.log('actions', id)
-      dispatch({ type: ADD_CHILD_DETAILS, payload: id })
+  dispatch({ type: ADD_CHILD_DETAILS, payload: id })
 }
+
 export function uploadimage(dispatch, img) {
-  console.log('action', img)
-      dispatch({ type: ADD_IMAGE, payload: img })
+  console.log('action upload', img)
+  dispatch({ type: ADD_IMAGE, payload: { avatar: img } })
+}
+
+export function uploadChildimage(dispatch, img) {
+  console.log('action upload', img)
+  dispatch({ type: ADD_CHILD_IMAGE, payload: { avatar: img } })
 }

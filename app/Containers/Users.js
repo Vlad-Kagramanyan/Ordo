@@ -29,6 +29,7 @@ class Users extends Component {
 
 
     render() {
+        console.log('users props', this.props.user.childs)
         return (
             <UsersPage props={this.props} 
             changeUserData={this.changeUserData}

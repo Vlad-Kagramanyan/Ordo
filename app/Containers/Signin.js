@@ -1,16 +1,32 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import screen from '../constants/screen';
-import {TouchableOpacity, ScrollView, Image, ImageBackground, StyleSheet, Text, View} from 'react-native';
+import { TouchableOpacity, ScrollView, Image, ImageBackground, StyleSheet, Text, View } from 'react-native';
 import { GoogleSignin, statusCodes, GoogleSigninButton } from 'react-native-google-signin';
 import LoginForm from '../Components/LoginForm';
 
 export default class Signin extends Component {
-  state = {
-    userInfo: "",
-    error: ""
+  constructor(props) {
+    super(props);
+
+    this._isMounted = false;
+    this.state = {
+      userInfo: "",
+      error: "",
+    }
   }
 
-  async componentDidMount () {
+
+
+  componentDidMount() {
+    this._isMounted = true;
+    this._isMounted && this.GoogleSignin()
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+
+   GoogleSignin = async () => {
     try {
       await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
       // google services are available
@@ -36,7 +52,7 @@ export default class Signin extends Component {
         console.log('user cancelled the login flow')
         this.setState({ error: 'user cancelled the login flow' });
       } else if (error.code === statusCodes.IN_PROGRESS) {
-         console.log('operation (f.e. sign in) is in progress already')
+        console.log('operation (f.e. sign in) is in progress already')
       } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
         console.log('// play services not available or outdated')
         this.setState({ error: 'play services not available or outdated' });
@@ -51,26 +67,26 @@ export default class Signin extends Component {
     console.log('state s', this.state)
     return (
       <ScrollView contentContainerStyle={styles.contentContainerStyle} style={styles.container}>
-          <ImageBackground source={require('../images/bg.jpg')} style={[styles.imageBg, {width: '100%', height: '100%', position: 'absolute'}]}></ImageBackground>
-          <View style={styles.wrapper}>
-            <View style={styles.logoBlock}>
-                <Image source={require('../images/ordo_logo.png')} style={styles.logo}/>
+        <ImageBackground source={require('../images/bg.jpg')} style={[styles.imageBg, { width: '100%', height: '100%', position: 'absolute' }]}></ImageBackground>
+        <View style={styles.wrapper}>
+          <View style={styles.logoBlock}>
+            <Image source={require('../images/ordo_logo.png')} style={styles.logo} />
+          </View>
+          <LoginForm
+            fetch={this.props.fetch}
+            password={this.props.password}
+            email={this.props.email}
+            userLogin={this.props.userLogin}
+            msg={this.props.msg}
+            inputChange={(target, value) => this.props.inputChange(target, value)} />
+          <Text style={styles.text}>OR</Text>
+          {this.state.error.length > 0 && <Text style={[styles.text, { color: 'red' }]}>{this.state.error}</Text>}
+          <TouchableOpacity style={styles.googlebutton} onPress={this.signIn}>
+            <View>
+              <Image source={require('../images/search.png')} />
             </View>
-            <LoginForm 
-              fetch={this.props.fetch}
-              password={this.props.password}
-              email={this.props.email}
-              userLogin={this.props.userLogin}
-              msg={this.props.msg}
-              inputChange={(target, value) => this.props.inputChange(target, value)}/>
-            <Text style={styles.text}>OR</Text>
-            {this.state.error.length > 0 && <Text style={[styles.text, {color: 'red'}]}>{this.state.error}</Text>}
-            <TouchableOpacity style={styles.googlebutton} onPress={this.signIn}>
-              <View>
-                  <Image source={require('../images/search.png')}/>
-              </View>
-              <Text style={{color: '#dc4e41'}}>SIGN IN WITH GOOGLE</Text>
-            </TouchableOpacity>
+            <Text style={{ color: '#dc4e41' }}>SIGN IN WITH GOOGLE</Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     );
@@ -84,7 +100,7 @@ const styles = StyleSheet.create({
   },
 
   contentContainerStyle: {
-    alignItems: 'center', 
+    alignItems: 'center',
   },
 
   wrapper: {

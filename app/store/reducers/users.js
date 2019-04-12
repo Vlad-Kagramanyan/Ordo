@@ -21,8 +21,12 @@ import {
     UPDATE_USER_REQUEST,
     UPDATE_USER_REQUEST_SUCCESS,
     UPDATE_USER_REQUEST_FAILURE,
+    UPDATE_CHILD_REQUEST,
+    UPDATE_CHILD_REQUEST_SUCCESS,
+    UPDATE_CHILD_REQUEST_FAILURE,
     ADD_CHILD_DETAILS,
     ADD_PARENT_DETAILS,
+    ADD_CHILD_IMAGE,
     ADD_IMAGE,
 } from '../constants/users';
 
@@ -51,6 +55,7 @@ export default function user(state = initialState, action) {
             return { ...state, ...{ isloading: true, error: "", } }
         case LOGIN_REQUEST_SUCCESS:
             let activeUser = { activeUser: action.payload.family.parents.filter((item) => item.id === action.payload.success.parent_id) }
+            activeUser = { activeUser: activeUser.activeUser[0] };
             let data = { ...action.payload.success, family: action.payload.family, ...activeUser }
             return { ...state, ...{ isloading: false, loaded: true, login: false, main: true }, data: data }
         case LOGIN_REQUEST_FAILURE:
@@ -61,7 +66,7 @@ export default function user(state = initialState, action) {
         case PARENT_REQUEST_SUCCESS:
             let parentsID = Object.assign([], state.parentsID);
             parentsID.push({ parent_id: action.payload.parent_id })
-            return { ...state, ...{ isloading: false, parent1: false, loaded: true, child: true, parent: false, parentsID, parentsID }, data: { token: action.payload.token } }
+            return { ...state, ...{ isloading: false, parent1: false, loaded: true, child: true, parent: false, parentsID, parentsID }, data: { token: action.payload.token, family_id: action.payload.family_id } }
         case PARENT_REQUEST_FAILURE:
             return { ...state, ...{ error: action.payload, isloading: false } }
 
@@ -70,7 +75,7 @@ export default function user(state = initialState, action) {
         case ADD_PARENT_REQUEST_SUCCESS:
             let parentsID2 = Object.assign([], state.parentsID);
             parentsID2.push({ parent_id: action.payload.parent_id })
-            return { ...state, ...{ parentCount: state.parentCount + 1, isloading: false, child: false, loaded: true, parent1: false, parentsID: parentsID2 }, data: { token: action.payload.token } }
+            return { ...state, ...{ parentCount: state.parentCount + 1, isloading: false, child: false, loaded: true, parent1: false, parentsID: parentsID2 }, data: { token: action.payload.token, family_id: action.payload.family_id } }
         case ADD_PARENT_REQUEST_FAILURE:
             return { ...state, ...{ error: action.payload, isloading: false } }
 
@@ -79,7 +84,7 @@ export default function user(state = initialState, action) {
         case CHILD_REQUEST_SUCCESS:
             let childsID = Object.assign([], state.childsID);
             childsID.push({ child_id: action.payload.child_id })
-            return { ...state, ...{ isloading: false, loaded: true, child: false, week: true, childsID: childsID }, data: {} }
+            return { ...state, ...{ isloading: false, loaded: true, child: false, week: true, childsID: childsID }, }
         case CHILD_REQUEST_FAILURE:
             return { ...state, ...{ error: action.payload, isloading: false } }
 
@@ -88,19 +93,48 @@ export default function user(state = initialState, action) {
         case ADD_CHILD_REQUEST_SUCCESS:
             let childsID2 = Object.assign([], state.childsID);
             childsID2.push({ child_id: action.payload.child_id })
-            return { ...state, ...{ parentCount: state.childCount + 1, isloading: false, loaded: true, child1: false, childsID: childsID2 }, data: {} }
+            return { ...state, ...{ parentCount: state.childCount + 1, isloading: false, loaded: true, child1: false, childsID: childsID2 }, }
         case ADD_CHILD_REQUEST_FAILURE:
             return { ...state, ...{ error: action.payload, isloading: false } }
 
         case ADD_CHILD_DETAILS:
-            return { ...state, ...{ userDetails: state.data.family.childs.filter(item => item.id == action.payload) } }
+            return { ...state, ...{ userDetails: Object.assign({}, ...state.data.family.childs.filter(item => item.id == action.payload)) } }
         case ADD_PARENT_DETAILS:
-            return { ...state, ...{ userDetails: state.data.family.parents.filter(item => item.id == action.payload) } }
+            return { ...state, ...{ userDetails: Object.assign({}, ...state.data.family.parents.filter(item => item.id == action.payload)) } }
+
+        case UPDATE_USER_REQUEST:
+            return state
+        case UPDATE_USER_REQUEST_SUCCESS:
+            return Object.assign({}, state, { data: { ...state.data, activeUser: Object.assign({}, state.data.activeUser, action.payload) } })
+        case UPDATE_USER_REQUEST_FAILURE:
+            return state
+
+        case UPDATE_CHILD_REQUEST_SUCCESS:
+            return Object.assign({}, state, {
+                data: {
+                    ...state.data, family: {
+                        ...state.data.family, childs: state.data.family.childs.map((item) => {
+                            return (item.id == action.payload.child_id) ? { ...item, ...action.payload } : item
+                        })
+                    }
+                }
+            })
+        case UPDATE_CHILD_REQUEST_FAILURE:
+            return state
+
+        case ADD_CHILD_IMAGE:
+            return Object.assign({}, state, {
+                data: {
+                    ...state.data, family: { 
+                        ...state.data.family, childs: state.data.family.childs.map((item) => {
+                            return (item.id == state.userDetails.id) ? { ...item, ...action.payload } : item
+                        })
+                    }
+                }
+            })
 
         case ADD_IMAGE:
-            const  newActiveUser = [...state.data.activeUser];
-            console.log('acitve user', newActiveUser)
-            return state//{ ...state, data: {...activeUser[0], ...{avatar: action.payload}}}
+            return Object.assign({}, state, { data: { ...state.data, activeUser: Object.assign({}, state.data.activeUser, action.payload) } })
         default:
             return state
     }

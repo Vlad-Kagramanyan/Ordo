@@ -93,9 +93,9 @@ export default class WeeklyVisitation extends Component {
     })
 
     if (index != undefined) {
-      arr[index] = { main_parent_id: '1', week_holiday: '1', child_id: this.state.child_id, days: newArray }
+      arr[index] = { main_parent_id: this.props.countValParents[0].value.parent_id, week_holiday: '1', child_id: this.state.child_id, days: newArray }
     } else {
-      arr.push({ main_parent_id: '1', week_holiday: '1', child_id: this.state.child_id, days: newArray })
+      arr.push({ main_parent_id: this.props.countValParents[0].value.parent_id, week_holiday: '1', child_id: this.state.child_id, days: newArray })
     }
     this.setState({ childinfo: arr })
   }
