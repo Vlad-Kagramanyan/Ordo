@@ -34,7 +34,7 @@ class SideMenu extends Component {
           </Body>
           <Right>
             <TouchableOpacity onPress={this.navigateToScreen('Settings')}>
-              <Thumbnail source={require('../images/settings.png')} style={{ width: 20, height: 20 }} />
+              <Thumbnail source={require('../images/settings.png')} style={{ width: 30, height: 30 }} />
             </TouchableOpacity>
           </Right>
         </ListItem>
@@ -60,7 +60,7 @@ class SideMenu extends Component {
               <Thumbnail square source={require('../images/call-icon.png')} style={{ width: 20, height: 20, marginRight: 5 }} />
             </Left>
             <Body style={styles.navSectionStyle}>
-              <Text style={styles.navItemStyle} onPress={this.navigateToScreen('Messages')}>Contacts</Text>
+              <Text style={styles.navItemStyle} onPress={this.navigateToScreen('Contacts')}>Contacts</Text>
             </Body>
           </ListItem>
           <ListItem noBorder icon>
@@ -69,14 +69,6 @@ class SideMenu extends Component {
             </Left>
             <Body style={styles.navSectionStyle}>
               <Text style={styles.navItemStyle} onPress={this.navigateToScreen('Expenses')}>Expenses</Text>
-            </Body>
-          </ListItem>
-          <ListItem noBorder icon>
-            <Left>
-              <Thumbnail square source={require('../images/note-icon.png')} style={{ width: 20, height: 20, marginRight: 5 }} />
-            </Left>
-            <Body style={styles.navSectionStyle}>
-              <Text style={styles.navItemStyle} >Documents</Text>
             </Body>
           </ListItem>
           <ListItem noBorder icon>
@@ -112,7 +104,7 @@ class SideMenu extends Component {
 
 mapStateToProps = (state) => {
   return {
-    user: state
+    user: state.user
   }
 }
 

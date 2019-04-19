@@ -133,7 +133,7 @@ class User extends Component {
 
 mapStateToProps = (state) => {
     return {
-        user: state
+        user: state.user
     }
 }
 

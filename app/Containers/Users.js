@@ -29,21 +29,21 @@ class Users extends Component {
 
 
     render() {
-        console.log('users props', this.props.user.childs)
+        console.log('users ', this.props.user.data.family.parents)
         return (
-            <UsersPage props={this.props} 
-            changeUserData={this.changeUserData}
-            parents={this.props.user.data.family.parents}
-            childs={this.props.user.data.family.childs}
-            childDetails={this.childDetails}
-            parentDetails={this.parentDetails}/>
+            <UsersPage props={this.props}
+                changeUserData={this.changeUserData}
+                parents={this.props.user.data.family.parents}
+                childs={this.props.user.data.family.childs}
+                childDetails={this.childDetails}
+                parentDetails={this.parentDetails} />
         )
     }
 }
 
 mapStateToProps = (state) => {
     return {
-        user: state
+        user: state.user
     }
 }
 

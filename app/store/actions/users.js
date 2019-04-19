@@ -172,7 +172,7 @@ export function addChildRequest(dispatch, data, token) {
 
 
 export function weekRequest(dispatch, data, token) {
-  console.log('actions', )
+  console.log('actions')
   dispatch({ type: LOGIN_REQUEST })
   axios.post('http://myworks.site/dev/calendar_based_api/public/api/visitation',
     {
@@ -180,13 +180,13 @@ export function weekRequest(dispatch, data, token) {
     },
     { headers: { "Authorization": `Bearer ${token}` } }
   )
-  .then((response) => {
-    console.log('res token', response.data)
-    dispatch({ type: LOGIN_REQUEST_SUCCESS, payload: response.data })
-  }).catch((err) => {
-    console.log('error 10', err.response.data.message)
-    dispatch({ type: LOGIN_REQUEST_FAILURE, payload: err.response.data.message })
-  })
+    .then((response) => {
+      console.log('res token', response.data)
+      dispatch({ type: LOGIN_REQUEST_SUCCESS, payload: response.data })
+    }).catch((err) => {
+      console.log('error 10', err.response.data.message)
+      dispatch({ type: LOGIN_REQUEST_FAILURE, payload: err.response.data.message })
+    })
 }
 
 
@@ -250,9 +250,9 @@ export function childDetails(dispatch, id) {
   dispatch({ type: ADD_CHILD_DETAILS, payload: id })
 }
 
-export function uploadimage(dispatch, img) {
-  console.log('action upload', img)
-  dispatch({ type: ADD_IMAGE, payload: { avatar: img } })
+export function uploadimage(dispatch, data) {
+  console.log('action upload', data)
+  dispatch({ type: ADD_IMAGE, payload: { avatar: data.img, id: data.id } })
 }
 
 export function uploadChildimage(dispatch, img) {

@@ -14,18 +14,18 @@ import * as action from '../store/actions/users';
 
 class InitialForms extends Component {
   state = {
-    email: "test@gmail.com",
+    email: "",
     msg: "",
-    password: "111111",
-    lastName: "Due",
-    firstName: "Jon",
-    gender: "male",
-    day: "13",
-    month: "11",
-    year: "2019",
-    country: "country",
-    religion: "religion",
-    calendar: "calendar"
+    password: "",
+    lastName: "",
+    firstName: "",
+    gender: "",
+    day: "",
+    month: "",
+    year: "",
+    country: "",
+    religion: "",
+    calendar: ""
   }
 
   isEmailAddress = (email) => {
@@ -197,7 +197,7 @@ class InitialForms extends Component {
   }
 
   weekFetch = (data) => {
-    this.props.week(data)
+    this.props.week(data, this.props.user.data.token)
   }
 
   setData = (value, property) => {
@@ -309,7 +309,7 @@ class InitialForms extends Component {
 
 mapStateToProps = (state) => {
   return {
-    user: state
+    user: state.user
   }
 }
 

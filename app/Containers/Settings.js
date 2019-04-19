@@ -141,7 +141,7 @@ class Settings extends Component {
             ]).then((res) => {
                 let response = JSON.parse(res.data)
                 this.setState({ avatarSource: response.success.avatar })
-                this.props.uploadimage(response.success.avatar)
+                this.props.uploadimage({img: response.success.avatar, id: id})
             }).catch((err) => {
                 console.log('err upload', err)
             })
@@ -172,7 +172,7 @@ class Settings extends Component {
 
 mapStateToProps = (state) => {
     return {
-        user: state
+        user: state.user
     }
 }
 

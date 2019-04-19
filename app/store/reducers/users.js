@@ -105,7 +105,16 @@ export default function user(state = initialState, action) {
         case UPDATE_USER_REQUEST:
             return state
         case UPDATE_USER_REQUEST_SUCCESS:
-            return Object.assign({}, state, { data: { ...state.data, activeUser: Object.assign({}, state.data.activeUser, action.payload) } })
+            return Object.assign({}, state, {
+                data: {
+                    ...state.data, family: {
+                        ...state.data.family, parents: state.data.family.parents.map((item) => {
+                            return (item.email == action.payload.email) ? { ...item, ...action.payload } : item
+                        })
+                    },
+                    activeUser: Object.assign({}, state.data.activeUser, action.payload)
+                }
+            })
         case UPDATE_USER_REQUEST_FAILURE:
             return state
 
@@ -125,7 +134,7 @@ export default function user(state = initialState, action) {
         case ADD_CHILD_IMAGE:
             return Object.assign({}, state, {
                 data: {
-                    ...state.data, family: { 
+                    ...state.data, family: {
                         ...state.data.family, childs: state.data.family.childs.map((item) => {
                             return (item.id == state.userDetails.id) ? { ...item, ...action.payload } : item
                         })
@@ -134,7 +143,16 @@ export default function user(state = initialState, action) {
             })
 
         case ADD_IMAGE:
-            return Object.assign({}, state, { data: { ...state.data, activeUser: Object.assign({}, state.data.activeUser, action.payload) } })
+            return Object.assign({}, state, {
+                data: {
+                    ...state.data, family: {
+                        ...state.data.family, parents: state.data.family.parents.map((item) => {
+                            return (item.id == action.payload.id) ? { ...item, ...action.payload } : item
+                        })
+                    },
+                    activeUser: Object.assign({}, state.data.activeUser, action.payload)
+                }
+            })
         default:
             return state
     }

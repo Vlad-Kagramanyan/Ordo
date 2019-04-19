@@ -17,6 +17,7 @@ import Users from "./Users";
 import User from "./User";
 import Expenses from "./Expenses";
 import SideMenu from "../Components/SideMenu";
+import Contacts from "./Contacts";
 
 const stackNav = createStackNavigator({
 
@@ -120,6 +121,24 @@ const stackNav = createStackNavigator({
     screen: Expenses,
     navigationOptions: ({ navigation }) => ({
       title: "Expenses",
+      headerStyle: {
+        backgroundColor: '#185956',
+      },
+      headerTitleStyle: {
+        color: 'white'
+      },
+      headerTintColor: 'white',
+      headerRight: (
+        <>
+          <Image source={require('../images/ordo_logo.png')} style={{ width: 65, height: 50, marginRight: 20 }} />
+        </>
+      ),
+    })
+  },
+  Contacts: {
+    screen: Contacts,
+    navigationOptions: ({ navigation }) => ({
+      title: "Contacts",
       headerStyle: {
         backgroundColor: '#185956',
       },
