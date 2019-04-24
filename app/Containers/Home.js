@@ -16,7 +16,7 @@ const drawernav = createDrawerNavigator({
     }
   }, {
     contentComponent: SideMenu,
-    drawerWidth: Dimensions.get('window').width - 80,  
+    drawerWidth: Dimensions.get('window').width,  
 });
 
   export default createAppContainer(drawernav);

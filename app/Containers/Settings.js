@@ -108,7 +108,6 @@ class Settings extends Component {
         }else {
             this.props.changeUserData(data, this.props.user.data.token)
         }
-        
     }
 
     changeFlag = (name) => {
