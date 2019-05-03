@@ -10,7 +10,8 @@ import { Container, Header, Content, Icon, Drawer } from 'native-base';
 
 import { DrawerActions, NavigationActions, createStackNavigator } from 'react-navigation';
 // import IOSIcon from "react-native-vector-icons/Ionicons";
-import MainScreen from "../Components/MainScreen";
+import Calendar from "./Calendar";
+import Event from "./Event";
 import Settings from './Settings';
 import Messages from "../Components/Messages";
 import Users from "./Users";
@@ -22,7 +23,7 @@ import Contacts from "./Contacts";
 const stackNav = createStackNavigator({
 
   Main: {
-    screen: MainScreen,
+    screen: Calendar,
     navigationOptions: ({ navigation }) => ({
       title: "Calendar",
       headerStyle: {
@@ -139,6 +140,24 @@ const stackNav = createStackNavigator({
     screen: Contacts,
     navigationOptions: ({ navigation }) => ({
       title: "Contacts",
+      headerStyle: {
+        backgroundColor: '#185956',
+      },
+      headerTitleStyle: {
+        color: 'white'
+      },
+      headerTintColor: 'white',
+      headerRight: (
+        <>
+          <Image source={require('../images/ordo_logo.png')} style={{ width: 65, height: 50, marginRight: 20 }} />
+        </>
+      ),
+    })
+  },
+  Event: {
+    screen: Event,
+    navigationOptions: ({ navigation }) => ({
+      title: "Event",
       headerStyle: {
         backgroundColor: '#185956',
       },
