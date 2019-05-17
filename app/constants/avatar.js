@@ -1,0 +1,1 @@
+export default avatarLink = 'http://myworks.site/dev/calendar_based_api/public/uploads/avatars/';
