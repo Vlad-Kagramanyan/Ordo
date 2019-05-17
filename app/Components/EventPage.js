@@ -1,5 +1,5 @@
-import React from 'react';
-import { StyleSheet, TouchableOpacity, View, Switch } from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet, TouchableOpacity, View, Switch, Image } from 'react-native';
 import { Container, Thumbnail, Body, Content, Button, Input, Icon, ListItem, DatePicker, Text } from 'native-base';
 import DateTimePicker from "react-native-modal-datetime-picker";
 import avatarLink from '../constants/avatar';
@@ -7,9 +7,9 @@ import avatarLink from '../constants/avatar';
 const EventPage = ({ childs, inputChange, changeFlag, onSwitch, eventFlag,
     alarmFlag, locationFlag, event, alarm, loacation, switchValue,
     fromisDatePickerVisible, fromisTimePickerVisible, toisDatePickerVisible, avatarSource,
-    toisTimePickerVisible, ToggleDateTimePicker, handleDatePicked, toHandleDatePicked,
+    toisTimePickerVisible, ToggleDateTimePicker, handleDatePicked, toHandleDatePicked, goToEventSecondPage,
     handleTimePicked, toHandleTimePicked, fromTime, fromDate, toTime, toDate, chooseChild, choosenChildId }) => {
-        console.log('ssssssss', choosenChildId)
+
     return (
         <Container >
             <Content>
@@ -92,7 +92,13 @@ const EventPage = ({ childs, inputChange, changeFlag, onSwitch, eventFlag,
                                 {item.avatar ? <Thumbnail source={{ uri: `${avatarLink}${item.avatar}` }} /> :
                                     <Thumbnail source={require('../images/empty_avatar.jpg')} />}
                                 {choosenChildId.indexOf(item.id) != (-1) ?
-                                    avatarSource ? <Thumbnail style={styles.absoluteImg} source={{ uri: `${avatarLink}${avatarSource}` }} /> :
+                                    avatarSource ?
+                                        <View style={{ width: 55, height: 55, borderRadius: 50, zIndex: 3333, backgroundColor: 'rgba(0,0,0,.5)', position: 'absolute', justifyContent: 'center', alignItems: 'center' }}>
+                                            <View >
+                                                <Image style={{ width: 25, height: 25 }} source={require('../images/checked-green.png')} />
+                                            </View>
+                                            <Thumbnail style={styles.absoluteImg} source={{ uri: `${avatarLink}${avatarSource}` }} />
+                                        </View> :
                                         <Thumbnail style={styles.absoluteImg} source={require('../images/empty_avatar.jpg')} /> : null}
                             </TouchableOpacity>
                         ))}
@@ -106,7 +112,7 @@ const EventPage = ({ childs, inputChange, changeFlag, onSwitch, eventFlag,
                     </Body>) :
                     (<ListItem bordered>
                         <Text style={{ flex: 2, }}>Repeat</Text>
-                        <Button iconRight transparent>
+                        <Button iconRight transparent onPress={() => goToEventSecondPage()}>
                             <Icon name='arrow-forward' style={{ color: 'black' }} />
                         </Button>
                     </ListItem>)}

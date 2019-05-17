@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import styles from './SideMenu.style';
 import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, Alert } from 'react-native';
 import { DrawerActions, StackNavigator } from 'react-navigation';
 import { Container, Content, ListItem, Text, Left, Header, Body, Thumbnail, Right, Button, StatusBar, Row } from 'native-base';
 import avatarLink from '../constants/avatar';
+
+import * as action from '../store/actions/users';
 
 class SideMenu extends Component {
   navigateToScreen = (route) => () => {
@@ -14,6 +16,23 @@ class SideMenu extends Component {
     });
     this.props.navigation.dispatch(navigateAction);
   }
+
+  isExit = () => {
+    Alert.alert(
+      'do you want to exit application',
+      '',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {text: 'OK', onPress: () => this.props.exit('data', this.props.user.data.token)},
+      ],
+      {cancelable: false},
+    );
+  }
+
   render() {
     const user = this.props.user.data.activeUser;
     const imageUrl = avatarLink + user.avatar
@@ -42,7 +61,7 @@ class SideMenu extends Component {
                 <Thumbnail square source={require('../images/calendar-icon.png')} style={{ width: 20, height: 20, marginRight: 5 }} />
               </Left>
               <Body style={styles.navSectionStyle}>
-                <Text style={styles.navItemStyle} onPress={this.navigateToScreen('Main')}>Calendar</Text>
+              <Text style={styles.navItemStyle} onPress={() => this.props.navigation.dispatch(DrawerActions.closeDrawer())}>calendar</Text>
               </Body>
             </ListItem>
             <ListItem noBorder icon>
@@ -71,7 +90,7 @@ class SideMenu extends Component {
             </ListItem>
             <ListItem noBorder icon>
               <Left>
-                <Thumbnail square source={require('../images/group-icon.png')} style={{ width: 20, height: 20, marginRight: 5 }} />
+                <Thumbnail square source={require('../images/group-icon.png')} style={{ width: 25, height: 20, marginRight: 0 }} />
               </Left>
               <Body style={styles.navSectionStyle}>
                 <Text style={styles.navItemStyle} onPress={this.navigateToScreen('Users')}>Users</Text>
@@ -82,21 +101,19 @@ class SideMenu extends Component {
                 <Thumbnail square source={require('../images/info-icon.png')} style={{ width: 20, height: 20, marginRight: 5 }} />
               </Left>
               <Body style={styles.navSectionStyle}>
-                <Text style={styles.navItemStyle} >Help</Text>
+                <Text style={styles.navItemStyle} onPress={this.navigateToScreen('Help')}>Help</Text>
               </Body>
             </ListItem>
             <ListItem noBorder icon>
               <Left>
-                <Thumbnail square source={require('../images/logout-icon.png')} style={{ width: 20, height: 20, marginRight: 5 }} />
+                <Thumbnail square source={require('../images/logout-icon.png')} style={{ width: 25, height: 20, marginRight: 0 }} />
               </Left>
               <Body style={styles.navSectionStyle}>
-                <Text style={styles.navItemStyle} >Logout</Text>
+                <Text style={styles.navItemStyle} onPress={()=>this.isExit()}>Logout</Text>
               </Body>
             </ListItem>
           </Content>
         </Content>
-        <Button transparent style={{ width: 20 + '%', height: 100 + '%'}} onPress={() => this.props.navigation.dispatch(DrawerActions.closeDrawer())}>
-        </Button>
       </Container>
     );
   }
@@ -111,11 +128,8 @@ mapStateToProps = (state) => {
 
 mapDispatchToProps = (dispatch) => {
   return {
-    changeUserData: (data, token) => {
-      action.changeUserData(dispatch, data, token)
-    },
-    uploadimage: (data, token) => {
-      action.uploadimage(dispatch, data, token)
+    exit: (data, token) => {
+      action.exit(dispatch, data, token)
     }
   }
 }

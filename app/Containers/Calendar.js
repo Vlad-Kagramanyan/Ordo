@@ -13,12 +13,17 @@ class Calendar extends Component {
         this.state = {
             avatarSource: this.props.user.userDetails.avatar,
             search : '',
-            searchFlag : false
+            searchFlag : false,
+            currentDate: new Date().toString().substring(0, 15),
         }
     }
 
     goToEvent = () => {
         this.props.navigation.navigate('Event')
+    }
+
+    goToReminder = () => {
+        this.props.navigation.navigate('Reminder')
     }
 
     toggleSearch = () => {
@@ -30,13 +35,16 @@ class Calendar extends Component {
     }
 
     render() {
+        console.log('cur', this.state.currentDate)
         return (
             <CalendarPage
                 goToEvent={this.goToEvent}
+                goToReminder={this.goToReminder}
                 toggleSearch={this.toggleSearch} 
                 search={this.state.search}
                 searchFlag={this.state.searchFlag}
-                inputChange={this.inputChange}/>
+                inputChange={this.inputChange}
+                currentDate={this.state.currentDate}/>
         )
     }
 }

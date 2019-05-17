@@ -18,12 +18,12 @@ LocaleConfig.locales['fr'] = {
 
 LocaleConfig.defaultLocale = 'fr';
 
-const CalendarPage = ({ goToEvent, toggleSearch, searchFlag, inputChange, search }) => {
+const CalendarPage = ({ goToEvent, goToReminder, toggleSearch, searchFlag, inputChange, search, currentDate }) => {
   return (
     <Container>
       <Content>
         {!searchFlag ? <Body style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around', backgroundColor: '#89ce97', padding: 5 }}>
-          <Text style={{ color: 'white' }}>January 2019</Text>
+          <Text style={{ color: 'white' }}>{currentDate.substring(4, currentDate.length)}</Text>
           <Right>
             <TouchableOpacity onPress={() => toggleSearch()}>
               <Icon name='search' style={{ color: 'white', fontSize: 45 }} />
@@ -45,7 +45,7 @@ const CalendarPage = ({ goToEvent, toggleSearch, searchFlag, inputChange, search
           }}
         />
         <Body style={{ width: 100 + '%', flexDirection: 'row', justifyContent: 'space-around', backgroundColor: '#89ce97', padding: 15 }}>
-          <Text style={{ color: 'white' }}>Monday, January 14, 2019</Text>
+          <Text style={{ color: 'white' }}>{currentDate}</Text>
         </Body>
         <Body style={styles.btnsWrap}>
           <Body style={{ width: 100 + '%' }}>
@@ -56,13 +56,13 @@ const CalendarPage = ({ goToEvent, toggleSearch, searchFlag, inputChange, search
           </Body>
           <Body>
             <Text style={{ color: '#89ce97' }}>Remainder</Text>
-            <TouchableOpacity style={styles.btn} onPress={() => goToEvent()}>
+            <TouchableOpacity style={styles.btn} onPress={() => goToReminder()}>
               <Text style={{ color: 'white' }}>+</Text>
             </TouchableOpacity>
           </Body>
           <Body>
             <Text style={{ color: '#89ce97' }}>Add holiday</Text>
-            <TouchableOpacity style={styles.btn} onPress={() => goToEvent()}>
+            <TouchableOpacity style={styles.btn}>
               <Text style={{ color: 'white' }}>+</Text>
             </TouchableOpacity>
           </Body>

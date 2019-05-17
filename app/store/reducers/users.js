@@ -28,6 +28,7 @@ import {
     ADD_PARENT_DETAILS,
     ADD_CHILD_IMAGE,
     ADD_IMAGE,
+    EXIT
 } from '../constants/users';
 
 
@@ -153,6 +154,10 @@ export default function user(state = initialState, action) {
                     activeUser: Object.assign({}, state.data.activeUser, action.payload)
                 }
             })
+
+        case EXIT:
+            return initialState
+
         default:
             return state
     }

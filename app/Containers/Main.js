@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, StatusBar } from 'react-native';
 import InitialForms from './InitialForms';
 import { Root, Header } from 'native-base';
-import WeeklyVisitation from './WeeklyVisitation';
-import Home from './Home';
+import ViewEvent from './ViewEvent';
 
 export default class Main extends Component {
   render() {
@@ -11,6 +9,7 @@ export default class Main extends Component {
       <Root>
         <Header androidStatusBarColor="#195c59" style={{ display: 'none' }} />
         <InitialForms />
+        {/* <ViewEvent/> */}
       </Root>
     );
   }

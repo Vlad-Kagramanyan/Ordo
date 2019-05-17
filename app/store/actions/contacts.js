@@ -7,6 +7,8 @@ import { Toast } from 'native-base';
 
 import axios from 'axios';
 
+import URL from '../../constants/url';
+
 parseError = (errors) => {
     let msg = "";
     for (let item in errors) {
@@ -25,7 +27,7 @@ function showMsg(text) {
 
 export function addContacts(dispatch, data, token) {
     console.log('action contacts', data)
-    axios.post('http://myworks.site/dev/calendar_based_api/public/api/contact',
+    axios.post(`${URL}contact`,
       data,
       { headers: { "Authorization": `Bearer ${token}` } }
     )
@@ -40,7 +42,7 @@ export function addContacts(dispatch, data, token) {
 
 export function getContacts(dispatch, data, token) {
     console.log('actions', data)
-    axios.get(`http://myworks.site/dev/calendar_based_api/public/api/contact/${data.parent_id}`,
+    axios.get(`${URL}contact/${data.parent_id}`,
       { headers: { "Authorization": `Bearer ${token}` } }
     )
       .then((response) => {
@@ -53,7 +55,7 @@ export function getContacts(dispatch, data, token) {
 
   export function deleteContact(dispatch, id, token) {
     console.log('actions del', id)
-    axios.delete(`http://myworks.site/dev/calendar_based_api/public/api/contact/${id}`,
+    axios.delete(`${URL}contact/${id}`,
       { headers: { "Authorization": `Bearer ${token}` } }
     )
       .then((response) => {
@@ -67,7 +69,7 @@ export function getContacts(dispatch, data, token) {
 
   export function editContact(dispatch, data, id, token) {
     console.log('actions edit', data)
-    axios.put(`http://myworks.site/dev/calendar_based_api/public/api/contact/${id}`,
+    axios.put(`${URL}contact/${id}`,
     data,
       { headers: { "Authorization": `Bearer ${token}` } }
     )

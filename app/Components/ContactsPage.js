@@ -7,7 +7,7 @@ import {
     Modal,
     TouchableHighlight
 } from 'react-native';
-import { Container, Thumbnail, Body, Left, Content, List, Item, Right, Input, Button, ListItem, Text, Header, Tab, Tabs } from 'native-base';
+import { Container, Body, Content, List, Item, Right, Input, Button, ListItem, Text, Icon } from 'native-base';
 import Styles from '../constants/Styles';
 import avatarLink from '../constants/avatar';
 
@@ -24,13 +24,13 @@ const ContactsPage = ({ setModalVisible, addContacts, editContact, callback, del
                                 <Text note numberOfLines={1}>{item.number}</Text>
                                 <Text note numberOfLines={1}>{item.address}</Text>
                             </Body>
-                            <Right>
-                                <Button style={{marginBottom: 10}} onPress={() => deleteContact(item.id)}>
-                                    <Text>delete</Text>
-                                </Button>
-                                <Button onPress={() => setModalVisible(!modalVisible, 'editContact', item.id)}>
-                                    <Text>edit</Text>
-                                </Button>
+                            <Right style={[Styles.FlexRow, {justifyContent: 'center'}]}>
+                                <TouchableHighlight onPress={() => setModalVisible(!modalVisible, 'editContact', item.id)}>
+                                    <Image style={{ width: 25, height: 25 }} source={require('../images/edit.png')} />
+                                </TouchableHighlight>
+                                <TouchableHighlight style={{marginLeft: 20}} onPress={() => deleteContact(item.id)}>
+                                    <Icon name='trash' style={{color: 'black', fontSize: 35}}/>
+                                </TouchableHighlight>
                             </Right>
                         </ListItem>
 
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
             bottom: 15
         },
     btnAdd: {
-                marginTop: 30,
+            marginTop: 30,
             backgroundColor: '#3e7b70',
             padding: 10,
             justifyContent: 'center',

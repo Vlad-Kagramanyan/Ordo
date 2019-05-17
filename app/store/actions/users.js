@@ -29,11 +29,14 @@ import {
   ADD_CHILD_DETAILS,
   ADD_PARENT_DETAILS,
   ADD_CHILD_IMAGE,
-  ADD_IMAGE
+  ADD_IMAGE,
+  EXIT
 } from '../constants/users';
 import { Toast } from 'native-base';
 
 import axios from 'axios';
+
+import URL from '../../constants/url';
 
 parseError = (errors) => {
   let msg = "";
@@ -51,7 +54,7 @@ export function registerRequest(dispatch, data) {
 
 export function loginRequest(dispatch, data) {
   dispatch({ type: LOGIN_REQUEST })
-  axios.post('http://myworks.site/dev/calendar_based_api/public/api/login', { email: data.email, password: data.password }
+  axios.post(`${URL}login`, { email: data.email, password: data.password }
   )
     .then((response) => {
       console.log('res token', response.data)
@@ -82,7 +85,7 @@ export function parentRequest(dispatch, data, token) {
     requestData.calendar = data.calendar
   }
   console.log('req data', requestData, data.parentCount)
-  axios.post('http://myworks.site/dev/calendar_based_api/public/api/register',
+  axios.post(`${URL}register`,
     requestData,
     { headers: { "Authorization": `Bearer ${token}` } }
   )
@@ -110,7 +113,7 @@ export function addParentRequest(dispatch, data, token) {
   if (data.parentCount == 1) {
     datas.calendar = data.calendar
   }
-  axios.post('http://myworks.site/dev/calendar_based_api/public/api/register',
+  axios.post(`${URL}register`,
     datas,
     { headers: { "Authorization": `Bearer ${token}` } }
   )
@@ -125,7 +128,7 @@ export function addParentRequest(dispatch, data, token) {
 
 export function childRequest(dispatch, data, token) {
   dispatch({ type: CHILD_REQUEST })
-  axios.post('http://myworks.site/dev/calendar_based_api/public/api/child',
+  axios.post(`${URL}child`,
     {
       first_name: data.first_name,
       last_name: data.last_name,
@@ -146,7 +149,7 @@ export function childRequest(dispatch, data, token) {
 
 export function addChildRequest(dispatch, data, token) {
   dispatch({ type: ADD_CHILD_REQUEST })
-  axios.post('http://myworks.site/dev/calendar_based_api/public/api/child',
+  axios.post(`${URL}child`,
     {
       first_name: data.first_name,
       last_name: data.last_name,
@@ -174,7 +177,7 @@ export function addChildRequest(dispatch, data, token) {
 export function weekRequest(dispatch, data, token) {
   console.log('actions')
   dispatch({ type: LOGIN_REQUEST })
-  axios.post('http://myworks.site/dev/calendar_based_api/public/api/visitation',
+  axios.post(`${URL}visitation`,
     {
       childs: data
     },
@@ -193,7 +196,7 @@ export function weekRequest(dispatch, data, token) {
 export function changeUserData(dispatch, data, token) {
   console.log('actions', token)
   dispatch({ type: UPDATE_USER_REQUEST })
-  axios.post('http://myworks.site/dev/calendar_based_api/public/api/users/update',
+  axios.post(`${URL}update`,
     data,
     { headers: { "Authorization": `Bearer ${token}` } }
   )
@@ -216,7 +219,7 @@ export function changeUserData(dispatch, data, token) {
 export function changeChlidData(dispatch, data, token) {
   console.log('actions', token)
   dispatch({ type: UPDATE_CHILD_REQUEST })
-  axios.post('http://myworks.site/dev/calendar_based_api/public/api/childUpdate',
+  axios.post(`${URL}childUpdate`,
     data,
     { headers: { "Authorization": `Bearer ${token}` } }
   )
@@ -258,4 +261,9 @@ export function uploadimage(dispatch, data) {
 export function uploadChildimage(dispatch, img) {
   console.log('action upload', img)
   dispatch({ type: ADD_CHILD_IMAGE, payload: { avatar: img } })
+}
+
+export function exit (dispatch, data) {
+  console.log('action upload', data)
+  dispatch({ type: EXIT })
 }

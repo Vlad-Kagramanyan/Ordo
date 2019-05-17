@@ -8,6 +8,8 @@ import { Toast } from 'native-base';
 
 import axios from 'axios';
 
+import URL from '../../constants/url';
+
 parseError = (errors) => {
     let msg = "";
     for (let item in errors) {
@@ -26,7 +28,7 @@ function showMsg(text) {
 
 export function addExpense(dispatch, data, token) {
     console.log('action addexpense', data)
-    axios.post('http://myworks.site/dev/calendar_based_api/public/api/expenses',
+    axios.post(`${URL}expenses`,
       data,
       { headers: { "Authorization": `Bearer ${token}` } }
     )
@@ -43,7 +45,7 @@ export function addExpense(dispatch, data, token) {
 export function getExpenses(dispatch, data, token) {
     console.log('actions')
     dispatch({ type: CLEAR_EXPENSES})
-    axios.post('http://myworks.site/dev/calendar_based_api/public/api/expensesChild',
+    axios.post(`${URL}expensesChild`,
         data,
       { headers: { "Authorization": `Bearer ${token}` } }
     )

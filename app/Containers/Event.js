@@ -28,6 +28,7 @@ class Event extends Component {
         }
     }
 
+
     inputChange = (target, value) => {
         this.setState({ [target]: value, msg: "" })
     }
@@ -37,12 +38,10 @@ class Event extends Component {
     }
 
     onSwitch = (value) => {
-        console.log('Vlad', value)
         this.setState({ switchValue: !value })
     }
 
     ToggleDateTimePicker = (key) => {
-        console.log("Aaaa", key)
         this.setState({ [key]: !this.state.key });
     }
 
@@ -77,6 +76,10 @@ class Event extends Component {
         this.setState({ choosenChildId: arr })
     }
 
+    goToEventSecondPage = () => {
+        this.props.navigation.navigate('EventSecondPage')
+    }
+
     render() {
         console.log('user d', this.props.user.data.activeUser.avatar)
         return (
@@ -108,6 +111,7 @@ class Event extends Component {
                 toTime={this.state.toTime}
                 choosenChildId={this.state.choosenChildId}
                 chooseChild={this.chooseChild}
+                goToEventSecondPage={this.goToEventSecondPage}
             />
         )
     }

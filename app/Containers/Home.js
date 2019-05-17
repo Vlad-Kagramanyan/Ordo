@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
 import {ScrollView, View, Text} from 'react-native';
-import HomePage from '../Components/HomePage';
-import Messages from '../Components/Messages';
 import { AppRegistry, Dimensions } from 'react-native';
 import { createDrawerNavigator, createStackNavigator, createAppContainer } from 'react-navigation';
 
@@ -16,7 +14,8 @@ const drawernav = createDrawerNavigator({
     }
   }, {
     contentComponent: SideMenu,
-    drawerWidth: Dimensions.get('window').width,  
+    drawerWidth: Dimensions.get('window').width - 80, 
+    drawerBackgroundColor: 'transparent' 
 });
 
-  export default createAppContainer(drawernav);
+export default createAppContainer(drawernav);

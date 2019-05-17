@@ -147,6 +147,7 @@ class Settings extends Component {
     }
 
     render() {
+        console.log('set', this.props.user.data.activeUser)
         return (
             <SettingsPage
                 childDays={this.state.childDays}

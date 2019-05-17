@@ -36,8 +36,9 @@ export default class Signin extends Component {
     }
 
     GoogleSignin.configure({
-      scopes: ['https://www.googleapis.com/auth/drive.readonly'], // what API you want to access on behalf of the user, default is email and profile
-      webClientId: "547808104761-orhk06j8l2jrljao2v1475v5ri5ajpff.apps.googleusercontent.com", // client ID of type WEB for your server (needed to verify user ID and offline access)
+      scopes: ['https://www.googleapis.com/auth/admin.directory.resource.calendar'], // what API you want to access on behalf of the user, default is email and profile
+      client_id: "754005300243-85vlpdaf38bbcplbgaa7s3t7pkphgk11.apps.googleusercontent.com", // client ID of type WEB for your server (needed to verify user ID and offline access)
+      // offlineAccess: true,
     })
   }
 
@@ -46,6 +47,7 @@ export default class Signin extends Component {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
       this.props.googleFetch(userInfo)
+      console.log('user infoo', userInfo)
       this.setState({ userInfo });
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
