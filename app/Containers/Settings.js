@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import SettingsPage from '../Components/SettingsPage';
 import ImagePicker from 'react-native-image-picker';
 import RNFetchBlob from 'react-native-fetch-blob';
-import selectImage from '../Utils/imageUpload';
 import {Toast} from 'native-base';
 
 import * as action from '../store/actions/users';
@@ -84,6 +83,7 @@ class Settings extends Component {
     }
 
     changeUserData = () => {
+        console.log('chenge user data')
         let { email, dayValue, lastName, firstName, password, confirmPassword, newPassword, googleMerge } = this.state
         googleMerge = googleMerge ? 1 : 0
         let data = {
@@ -115,7 +115,6 @@ class Settings extends Component {
     }
 
     selectImage = () => {
-        console.log('sel')
         ImagePicker.showImagePicker(options, (response) => {
             if (response.didCancel) {
                 console.log('User cancelled image picker');
@@ -147,7 +146,6 @@ class Settings extends Component {
     }
 
     render() {
-        console.log('set', this.props.user.data.activeUser)
         return (
             <SettingsPage
                 childDays={this.state.childDays}

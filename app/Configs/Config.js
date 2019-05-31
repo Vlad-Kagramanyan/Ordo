@@ -1,20 +1,25 @@
 const BaseUrl = "http://myworks.site/dev/calendar_based_api/public/api/";
 
-const CalendarConfig = {
-    "clientId": "754005300243-85vlpdaf38bbcplbgaa7s3t7pkphgk11.apps.googleusercontent.com",
-    "apiKey": "AIzaSyBJaJYyMwL3oq-lZqk64fTeNkKkeyvKG3k",
-    "scope": "https://www.googleapis.com/auth/calendar",
-    "discoveryDocs": ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"]
+const GoogleSigninConfig = {
+    scopes: ['https://www.googleapis.com/auth/drive.readonly'], // what API you want to access on behalf of the user, default is email and profile
+    webClientId:"960243287688-06j5kfv49p1m79pa4f7d47eva6mrkmn2.apps.googleusercontent.com",
+    forceCodeForRefreshToken: true,
+    offlineAccess: true
 }
 
-const GoogleSigninConfig = {
-        scopes: ['https://www.googleapis.com/auth/drive.readonly'], // what API you want to access on behalf of the user, default is email and profile
-        client_id: "754005300243-85vlpdaf38bbcplbgaa7s3t7pkphgk11.apps.googleusercontent.com", // client ID of type WEB for your server (needed to verify user ID and offline access)
-}
+const firebaseConfig = {
+    apiKey: "AIzaSyBycRv35rgQ7wyEX2hCWuMSvS5OyLny9sk",
+    authDomain: "ordo-1558955690640.firebaseapp.com",
+    databaseURL: "https://ordo-1558955690640.firebaseio.com",
+    projectId: "ordo-1558955690640",
+    storageBucket: "ordo-1558955690640.appspot.com",
+    messagingSenderId: "960243287688",
+    appId: "1:960243287688:web:9e67a01f1865ec25"
+};
 
 
 export default {
     BaseUrl,
-    CalendarConfig,
-    GoogleSigninConfig
+    GoogleSigninConfig,
+    firebaseConfig
 }

@@ -2,16 +2,16 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import MessagesPage from '../Components/MessagesPage';
 
+
 class Messages extends Component {
-    goToChat = () => {
-        console.log('sssssssssssssssssssss')
-        this.props.navigation.navigate('Chat')
+    goToChat = (id) => {
+        this.props.navigation.navigate('Chat', {id: id})
     }
 
     render() {
         return (
             <MessagesPage
-                users={this.props.user.data.family.parents} 
+                users={this.props.user.data.family.parents.filter(item => item.id != this.props.user.data.activeUser.id)} 
                 goToChat={this.goToChat}/>
         )
     }

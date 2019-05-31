@@ -10,7 +10,7 @@ export default class LoginForm extends Component {
     return (
       <View style={styles.loginForm}>
           <TextInput style={styles.input} placeholder="email" name="email" value={this.props.email} placeholderTextColor="#89c194" onChangeText={(text) => this.props.inputChange('email', text)}/>
-          <TextInput style={styles.input} placeholder="password" name="password" value={this.props.password} placeholderTextColor="#89c194"  onChangeText={(text) => this.props.inputChange('password', text)}/>
+          <TextInput style={styles.input} secureTextEntry={true} placeholder="password" name="password" value={this.props.password} placeholderTextColor="#89c194"  onChangeText={(text) => this.props.inputChange('password', text)}/>
           {msg}
           <TouchableOpacity style={styles.btnSignin} onPress={this.props.userLogin}>
               <Text style={{color: '#fff'}}>Sign IN</Text>

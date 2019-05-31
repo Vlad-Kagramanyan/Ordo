@@ -6,11 +6,11 @@ import ParentForm from '../Components/ParentForm';
 import ChildForm from '../Components/ChildForm';
 import WeeklyVisitation from './WeeklyVisitation';
 import Home from './Home';
-import date from '../constants/date';
-import country from '../constants/country';
-import axios from 'axios';
+import firebase from 'firebase';
+import  Config  from '../Configs/Config';
 
 import * as action from '../store/actions/users';
+
 
 class InitialForms extends Component {
   state = {
@@ -29,8 +29,8 @@ class InitialForms extends Component {
   }
 
   componentDidMount() {
-    this.setState({email: "", password: ""})
-  }
+    firebase.initializeApp(Config.firebaseConfig)
+}
 
   isEmailAddress = (email) => {
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

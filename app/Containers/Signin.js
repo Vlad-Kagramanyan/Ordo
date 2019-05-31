@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import screen from '../constants/screen';
 import { TouchableOpacity, ScrollView, Image, ImageBackground, StyleSheet, Text, View } from 'react-native';
-import { GoogleSignin, statusCodes, GoogleSigninButton } from 'react-native-google-signin';
+import { GoogleSignin, statusCodes } from 'react-native-google-signin';
+import  Config  from '../Configs/Config'
 import LoginForm from '../Components/LoginForm';
 
 export default class Signin extends Component {
   constructor(props) {
     super(props);
-
+    console.disableYellowBox = true
     this._isMounted = false;
     this.state = {
       userInfo: "",
@@ -18,6 +19,8 @@ export default class Signin extends Component {
 
 
   componentDidMount() {
+
+
     this._isMounted = true;
     this._isMounted && this.GoogleSignin()
   }
@@ -35,11 +38,7 @@ export default class Signin extends Component {
       this.setState({ error: 'play services are not available' });
     }
 
-    GoogleSignin.configure({
-      scopes: ['https://www.googleapis.com/auth/admin.directory.resource.calendar'], // what API you want to access on behalf of the user, default is email and profile
-      client_id: "754005300243-85vlpdaf38bbcplbgaa7s3t7pkphgk11.apps.googleusercontent.com", // client ID of type WEB for your server (needed to verify user ID and offline access)
-      // offlineAccess: true,
-    })
+    GoogleSignin.configure(Config.GoogleSigninConfig)
   }
 
   signIn = async () => {

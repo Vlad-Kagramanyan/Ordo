@@ -9,7 +9,7 @@ const MessagesPage = ({ users, goToChat }) => {
                 <Tab heading="Conversations" tabStyle={{ backgroundColor: '#7cd095' }} activeTabStyle={{ backgroundColor: '#7cd095' }} textStyle={{ color: '#fff' }}>
                     <Container style={{ flex: 1 }}>
                         {users.map(item => (
-                            <ListItem onPress={() => goToChat()} key={item.id} style={{justifyContent: 'space-between', marginLeft: 0, padding: 10, marginBottom: 5, width: 100 + '%', backgroundColor: '#e7e7e7' }}>
+                            <ListItem onPress={() => goToChat(item.id)} key={item.id} style={{justifyContent: 'space-between', marginLeft: 0, padding: 10, marginBottom: 5, width: 100 + '%', backgroundColor: '#e7e7e7' }}>
                                 {item.avatar ? <Thumbnail source={{ uri: `${avatarLink}${item.avatar}` }} /> :
                                     <Thumbnail source={require('../images/empty_avatar.jpg')} />}
                                 <Text style={{ marginLeft: 20 }} >{item.first_name}</Text>
