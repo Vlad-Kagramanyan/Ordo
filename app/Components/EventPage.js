@@ -5,7 +5,7 @@ import DateTimePicker from "react-native-modal-datetime-picker";
 import avatarLink from '../constants/avatar';
 
 const EventPage = ({ childs, inputChange, changeFlag, onSwitch, eventFlag,
-    alarmFlag, locationFlag, event, alarm, loacation, switchValue,
+    alarmFlag, locationFlag, event, alarm, loacation, switchValue, onAddEvent,
     fromisDatePickerVisible, fromisTimePickerVisible, toisDatePickerVisible, avatarSource,
     toisTimePickerVisible, ToggleDateTimePicker, handleDatePicked, toHandleDatePicked, goToEventSecondPage,
     handleTimePicked, toHandleTimePicked, fromTime, fromDate, toTime, toDate, chooseChild, choosenChildId }) => {
@@ -35,7 +35,7 @@ const EventPage = ({ childs, inputChange, changeFlag, onSwitch, eventFlag,
                             isVisible={fromisDatePickerVisible}
                             onConfirm={handleDatePicked}
                             onCancel={ToggleDateTimePicker}
-                        />
+                        /> 
                         <TouchableOpacity onPress={() => ToggleDateTimePicker('fromisTimePickerVisible')}>
                             <Text >{fromTime}</Text>
                             <DateTimePicker
@@ -106,7 +106,7 @@ const EventPage = ({ childs, inputChange, changeFlag, onSwitch, eventFlag,
                 </ListItem>
                 {switchValue ?
                     (<Body style={{ flex: 1 }}>
-                        <TouchableOpacity style={styles.btn} >
+                        <TouchableOpacity style={styles.btn} onPress={() => onAddEvent()}>
                             <Text style={{ color: 'white' }}>Save</Text>
                         </TouchableOpacity>
                     </Body>) :

@@ -18,7 +18,7 @@ LocaleConfig.locales['fr'] = {
 
 LocaleConfig.defaultLocale = 'fr';
 
-const CalendarPage = ({ goToEvent, goToReminder, toggleSearch, searchFlag, inputChange, search, currentDate }) => {
+const CalendarPage = ({ goToEvent, goToReminder, toggleSearch, searchFlag, inputChange, search, currentDate, currentDateFormat }) => {
   return (
     <Container>
       <Content>
@@ -38,10 +38,11 @@ const CalendarPage = ({ goToEvent, goToReminder, toggleSearch, searchFlag, input
           </Body>}
         <Calendar
           style={[styles.calendar]}
-          current={'2019-05-16'}
+          current={currentDateFormat}
           firstDay={1}
+          onDayPress={(day)=>{console.log('day pressed', day)}}
           markedDates={{
-            '2012-05-23': { selected: true, marked: true },
+            [currentDateFormat]: { selected: true, marked: true, selectedColor: '#195c59' },
           }}
         />
         <Body style={{ width: 100 + '%', flexDirection: 'row', justifyContent: 'space-around', backgroundColor: '#89ce97', padding: 15 }}>

@@ -63,16 +63,16 @@ class Chat extends Component {
     sendeMessage = async () => {
         const userId = this.props.user.data.activeUser.id;
         // addDraft = () => {
-            // console.log('worked')
-            // }
-            
-            let msgId = firebase.database().ref('messages').child(userId).child(this.state.personID).push().key;
-            let updates = {}
-            let message = {
-                message: this.state.message,
-                time: firebase.database.ServerValue.TIMESTAMP,
-                from: userId,
-            }
+        // console.log('worked')
+        // }
+
+        let msgId = firebase.database().ref('messages').child(userId).child(this.state.personID).push().key;
+        let updates = {}
+        let message = {
+            message: this.state.message,
+            time: firebase.database.ServerValue.TIMESTAMP,
+            from: userId,
+        }
         // this.props.addDraft({from: userId, to: this.state.personID, message: message})
         updates['messages/' + userId + '/' + this.state.personID + '/' + msgId] = message;
         updates['messages/' + this.state.personID + '/' + userId + '/' + msgId] = message;

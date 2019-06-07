@@ -1,8 +1,9 @@
 const BaseUrl = "http://myworks.site/dev/calendar_based_api/public/api/";
 
 const GoogleSigninConfig = {
-    scopes: ['https://www.googleapis.com/auth/drive.readonly'], // what API you want to access on behalf of the user, default is email and profile
-    webClientId:"960243287688-06j5kfv49p1m79pa4f7d47eva6mrkmn2.apps.googleusercontent.com",
+    scopes: ['https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/calendar.events',
+        'https://www.googleapis.com/auth/calendar.addons.execute', 'profile', 'email'], // what API you want to access on behalf of the user, default is email and profile
+    webClientId: "960243287688-06j5kfv49p1m79pa4f7d47eva6mrkmn2.apps.googleusercontent.com",
     forceCodeForRefreshToken: true,
     offlineAccess: true
 }

@@ -34,8 +34,20 @@ class Calendar extends Component {
         this.setState({ [target]: value, msg: "" })
     }
 
+    formatDate = (date) => {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+    
+        if (month.length < 2) month = '0' + month;
+        if (day.length < 2) day = '0' + day;
+    
+        return [year, month, day].join('-');
+    }
+
     render() {
-        console.log('cur', this.state.currentDate)
+        console.log('cur', this.formatDate(this.state.currentDate))
         return (
             <CalendarPage
                 goToEvent={this.goToEvent}
@@ -44,7 +56,9 @@ class Calendar extends Component {
                 search={this.state.search}
                 searchFlag={this.state.searchFlag}
                 inputChange={this.inputChange}
-                currentDate={this.state.currentDate}/>
+                currentDate={this.state.currentDate}
+                currentDateFormat={this.formatDate(this.state.currentDate)}
+                />
         )
     }
 }

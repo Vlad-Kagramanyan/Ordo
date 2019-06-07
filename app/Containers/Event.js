@@ -80,6 +80,10 @@ class Event extends Component {
         this.props.navigation.navigate('EventSecondPage')
     }
 
+    onAddEvent = () => {
+        console.log('sssssssss')
+    }
+
     render() {
         console.log('user d', this.props.user.data.activeUser.avatar)
         return (
@@ -112,6 +116,7 @@ class Event extends Component {
                 choosenChildId={this.state.choosenChildId}
                 chooseChild={this.chooseChild}
                 goToEventSecondPage={this.goToEventSecondPage}
+                onAddEvent={this.onAddEvent}
             />
         )
     }
@@ -120,7 +125,7 @@ class Event extends Component {
 
 
 mapStateToProps = (state) => {
-    return {
+    return { 
         user: state.user
     }
 }
